@@ -22,7 +22,7 @@ var Info = React.createClass({
 
 			let markers = [];
 
-			for (let i = 0; i<5; i++) {
+			for (let i = 0; i<10; i++) {
 				const position = new google.maps.LatLng(
 					southWest.lat() + latSpan * Math.random(),
 					southWest.lng() + lngSpan * Math.random()	
@@ -94,7 +94,7 @@ var Info = React.createClass({
                         </GoogleMap>
                  
                     }			
-				/>	
+				</GoogleMapLoader>	
 				);
 				}
 			})
