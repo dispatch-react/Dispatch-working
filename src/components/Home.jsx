@@ -1,6 +1,5 @@
 var React = require('react');
 var Parse = require('parse');
-var Parse = require('parse');
 var ParseReact = require('parse-react');
 Parse.initialize("ttJuZRLZ5soirHP0jetkbsdqSGR3LUzO0QXRTwFN", "BDmHQzYoQ87Dpq0MdBRj9er20vfYytoh3YF5QXWd");
 
@@ -14,21 +13,16 @@ var Nav = require('./Nav.jsx');
 var Geolocation = require("./Geolocation.jsx");
 
 var Home = React.createClass({
-    mixins: [ParseReact.Mixin],
-    observe: function() {
-    return {
-      Missions: new Parse.Query('Missions').ascending('createdAt')
-    };
-  },
     logOut: function() {
-        console.log('calling logout')
+        console.log('calling logout');
         Parse.User.logOut();
     },
     render: function() {
         return (
-            
-            <Geolocation missions={this.data.Missions}/>
-            
+            <div>
+                <Geolocation />
+
+            </div>
         );
     }
 });

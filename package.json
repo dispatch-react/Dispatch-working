@@ -4,7 +4,7 @@
   "description": "The Dispatch framework",
   "main": "public/js/main.js",
   "scripts": {
-    "start": "watchify src/App.jsx -v -t [babelify --presets [ react es2015 stage-0 ] ] --debug -o public/js/main.js",
+    "start": "watchify src/App.jsx -v -t [babelify --presets [ react es2015 stage-0 ] ] --debug -o public/js/main.js & sass --watch public/sass/style.scss:public/css/style.csss",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -29,6 +29,7 @@
     "browserify": "^12.0.1",
     "can-use-dom": "^0.1.0",
     "gmaps": "^0.4.22",
+    "isomorphic-fetch": "^2.2.0",
     "lodash": "^3.10.1",
     "parse": "^1.6.13",
     "parse-react": "^0.5.0",

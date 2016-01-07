@@ -3,10 +3,8 @@ var React = require('react');
 var Settings = React.createClass({
     render: function() {
         return (
-        <h1>Settings</h1>
+        <img src="../src/img/settings.png"/>
     )}
 });
-
-
 
 module.exports = Settings;

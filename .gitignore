@@ -1,7 +1,12 @@
 # Created by .ignore support plugin (hsz.mobi)
 node_modules/
 .idea/
+<<<<<<< HEAD
 
 public/css/style.css
 
 public/js/main.js
+=======
+public/js/main.js
+public/css/style.css
+>>>>>>> 17e7db09acf702522199a974725aba25c4b171db

@@ -5,11 +5,16 @@ Parse.initialize("ttJuZRLZ5soirHP0jetkbsdqSGR3LUzO0QXRTwFN", "BDmHQzYoQ87Dpq0MdB
 
 var Button = require('react-bootstrap').Button;
 var ButtonToolbar = require('react-bootstrap').ButtonToolbar;
+var ButtonGroup = require('react-bootstrap').ButtonGroup;
 var Modal = require('react-bootstrap').Modal;
 var Input = require('react-bootstrap').Input;
 var ButtonInput = require('react-bootstrap').ButtonInput;
 var FormControls = require('react-bootstrap').FormControls;
+<<<<<<< HEAD
 var Autocomplete = require('./Autocomplete.jsx');
+=======
+var Col = require('react-bootstrap').Col;
+>>>>>>> 17e7db09acf702522199a974725aba25c4b171db
 
 
 var CreateMissionForm = React.createClass({
@@ -18,7 +23,7 @@ var CreateMissionForm = React.createClass({
             return {
                 showModal: false,
                 title: '',
-                value: 0,
+                value: '',
                 startDate: '',
                 endDate: '',
                 startLocation: '',
@@ -81,15 +86,22 @@ var CreateMissionForm = React.createClass({
         })
     },
         handleFormSubmit: function(e) {
+            var nthis = this
+            e.preventDefault();
+            var fileUpload = this.refs.fileUpload.getInputDOMNode().files;
+            
+            function postMission() {
+            
               var creator = ParseReact.Mutation.Create('Missions', {
-                title: this.state.title,
-                value: this.state.value,
-                startDate: this.state.startDate,
-                endDate: this.state.endDate,
-                startLocation: this.state.startLocation,
-                endLocation: this.state.endLocation,
-                description: this.state.description,
-                carReq: this.state.carReq
+                title: nthis.state.title,
+                value: nthis.state.value,
+                startDate: nthis.state.startDate,
+                endDate: nthis.state.endDate,
+                startLocation: nthis.state.startLocation,
+                endLocation: nthis.state.endLocation,
+                description: nthis.state.description,
+                carReq: nthis.state.carReq,
+                missionAttachment: att
             });
 
             // ...and execute it
@@ -99,6 +111,20 @@ var CreateMissionForm = React.createClass({
             function(error){
                 alert('there was an error, check your self')
             });
+        }
+
+            if (fileUpload.length === 0) {
+                var att = null;
+                postMission();
+            }
+            else {
+                var file = fileUpload[0];
+                att = new Parse.File("attach", file);
+                att.save().then(function(){
+                    postMission();
+                    nthis.close();
+                });
+            }
         },
         
         close() {
@@ -134,29 +160,36 @@ var CreateMissionForm = React.createClass({
               <form onSubmit={this.handleFormSubmit}>
     <Input type="text" label="Mission title" onChange={this.handleTitleChange} />
     <Input type="text" label="Bounty" onChange={this.handleValueChange} addonBefore="$" addonAfter=".00" />
+<<<<<<< HEAD
     <Input type="text" label="" onChange={this.handleStartDateChange} addonBefore="Start Date" />
     <Input type="text" label="" onChange={this.handleEndDateChange} addonBefore="End Date" help="[Optional]"/>
     <Autocomplete/>
+=======
+    <Input type="text" label="" onChange={this.handleStartLocationChange} addonBefore="Start Location" />
+>>>>>>> 17e7db09acf702522199a974725aba25c4b171db
     <Input type="textarea" label="Mission description" placeholder="be descriptive!" onChange={this.handleDescriptionChange}/>
-    <Input type="checkbox" label="Car required" onClick={this.handleCarReqChange} checked={this.state.carReq} />
     
-    <Input type="select" label="Type" placeholder="select" onChange={this.handleTypeChange}>
+    <Input type="select" label="Type" placeholder="select" labelClassName="col-xs-2" wrapperClassName="col-xs-4" onChange={this.handleTypeChange}>
       <option value="delivery">Delivery</option>
       <option value="online">Online</option>
       <option value="domestic">Domestic</option>
       <option value="creative">Creative</option>
     </Input>
     
-    <Input type="file" label="File" help="[Optional]" />
+    <Input type="checkbox" label="Car required" wrapperClassName="col-xs-6" onClick={this.handleCarReqChange} checked={this.state.carReq} />
     
-    <ButtonInput type="submit" value="Create" />
-    <ButtonInput type="reset" value="Reset" />
+    <Input type="file" id="MissionAttachment" ref="fileUpload" label="File" help="[Optional]" />
     
   </form>
 
             </Modal.Body>
           <Modal.Footer>
-            <Button onClick={this.close}>Close</Button>
+            <Col xs={2} xsOffset={8}>
+                <ButtonInput type="reset" value="Reset" />
+            </Col>
+            <Col xs={2}>    
+                <ButtonInput type="submit" value="Create" />
+            </Col>
           </Modal.Footer>
         </Modal>
       </div>

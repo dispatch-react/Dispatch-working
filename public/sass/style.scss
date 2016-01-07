@@ -9,13 +9,31 @@ img {
 #nav-icon {
         min-width: 50px;
     }
-    
-#profile-pic {
-    max-width: 30%;
+
+#map-icon {
+    min-width: 50px;
+    max-width: 100px;
+}
+
+#userInfo {
     float: right;
     border-radius: 5%;
 }
 
 .pac-container {
 	z-index: 999999;
+
+}
+
+#updatePhoto {
+    text-align: center;
+    margin: 5px;
+}
+
+.nav {
+    padding: 0 10px 0 10px;
+    
+    span {
+    display: block;
+    }
 }
