@@ -45,10 +45,7 @@ var App = React.createClass({
         if (this.data.user) {
             
             return (
-        <Grid>
-            <Row className="show-grid">
-              <Col xs={10} xsOffset={1} md={8} mdOffset={2}>
-                 <Well id="appView">
+        <div>
                     {
                         this.state.location === 1 ? <Profile user={this.data.user}/> :
                         this.state.location === 2 ? <Inbox user={this.data.user}/> :
@@ -58,12 +55,7 @@ var App = React.createClass({
                         
                     }
                         <Menu onChange={this.navChanged} location={this.state.location} user={this.data.user}/>
-                                
-                 </Well>
-              </Col>
-            </Row>
-            
-        </Grid>
+        </div>
             );
         }
         else {
