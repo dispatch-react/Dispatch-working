@@ -8,7 +8,8 @@ var Panel = require('react-bootstrap').Panel;
 var Label = require('react-bootstrap').Label;
 var Badge = require('react-bootstrap').Badge;
 var ListGroup = require('react-bootstrap').ListGroup;
-var ButtonInput = require('react-bootstrap').ButtonInput;
+var ButtonGroup = require('react-bootstrap').ButtonGroup;
+var Button = require('react-bootstrap').Button;
 var ListGroupItem = require('react-bootstrap').ListGroupItem;
 var Pagination = require('react-bootstrap').Pagination;
 var Pager = require('react-bootstrap').Pager;
@@ -117,21 +118,24 @@ var ShowMissions = React.createClass({
                 <Col xs={12}>
                         {this.data.userOwnMissions.map(function(c) {
                         if (c.applicants) {
-                        var sum = c.applicants.length + 1;
-                            applicantsBadge = (<Badge>sum</Badge>)
+ 
                             applicants = (c.applicants.map(function(a){
                                 return <ListGroupItem>
                                             <Label bsStyle="warning">Applicant:</Label>
                                             <span id="missionInfo"><Label bsStyle="info">{a.userName}</Label></span>
+                                        <Row><Col xs={6} xsOffset={6}>
                                         <form onSubmit={self.confirmMission.bind(self, c)}>
-                                            <ButtonInput bsStyle="success" onClick={self.setButtonValueA} type="submit" value="Accept" />
-                                            <ButtonInput bsStyle="danger" onClick={self.setButtonValueR} type="submit" value="Reject" />
+                                        <ButtonGroup>
+                                            <Button bsStyle="success" onClick={self.setButtonValueA} type="submit" value="Accept" pullRight>Accept</Button>
+                                            <Button bsStyle="danger" onClick={self.setButtonValueR} type="submit" value="Reject" pullRight>Reject</Button>
+                                        </ButtonGroup>
                                         </form>
+                                        </Col></Row>
                                         </ListGroupItem>
                             }))
                         }
                           return(
-    <Panel collapsible key={c.objectId} header={c.title + applicantsBadge}>
+    <Panel collapsible key={c.objectId} header={c.title}>
         <ListGroup fill>
             <ListGroupItem><Label bsStyle="info">Brief:</Label> <span id="missionInfo">{c.description}</span></ListGroupItem>
             <ListGroupItem><Label bsStyle="danger">Value:</Label> <span id="missionInfo">{c.value}</span></ListGroupItem>
@@ -140,7 +144,7 @@ var ShowMissions = React.createClass({
     </Panel>
                             );
                         })}
-                    {this.renderPagination(this.data.userActiveMissionsTotal)}
+                    {this.renderPagination(this.data.userOwnMissionsTotal)}
                 </Col>
             </Row>
         </Panel>
@@ -159,7 +163,7 @@ var ShowMissions = React.createClass({
     </Panel>
                             );
                         })}
-                    {this.renderPagination(this.data.userOwnMissionsTotal)}
+                    {this.renderPagination(this.data.userActiveMissionsTotal)}
                 </Col>
             </Row>
         </Panel>

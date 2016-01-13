@@ -109,10 +109,11 @@ var CreateMissionForm = React.createClass({
                 
             }
             else {
+                console.log('found attachment')
                 var file = fileUpload[0];
                 att = new Parse.File("attach", file);
                 att.save().then(function(){
-                    this.close();
+                    self.close();
                     postMission();
                     
                 });

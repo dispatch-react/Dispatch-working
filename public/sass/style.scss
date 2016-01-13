@@ -1,7 +1,7 @@
 $nav-clr: #160A20;
 
 #viewContent {
-    min-height: 70vh;
+    height: 68vh;
     padding-top: 0.5em;
     padding-bottom: 0.1em;
 }
@@ -42,12 +42,33 @@ img {
 }
 
 .nav {
-    font-size: 12pt;
-    padding-top: 10px;
+    font-size: 14pt;
+    margin-top: 8vh;
+    height: 22vh;
     
     span {
     display: block;
     }
+}
+
+.well {
+    margin-top: 0.1vh;
+    padding: 0;
+    padding-top: 0.9vh;
+    margin-bottom: 0;
+    > div {
+        padding: 0 1em 1em 1em;
+    }
+}
+
+.loginPage {
+    margin-top: 20vh;
+}
+
+
+
+button > span {
+    padding-left: 0.5em;
 }
 
 #msgInfo {
@@ -69,7 +90,7 @@ img {
 
 @media (max-width: 906px){
     .nav {
-        font-size: 8pt;
+        font-size: 12pt;
         >li>a {
             padding: 0;
         }
@@ -108,62 +129,5 @@ img {
     text-align: center;
     top: -100%;
     padding:2px 3px;
-}
 
-/* Styles for the contacts search-box */
-
-.react-autosuggest__container {
-  position: relative;
-}
-
-.react-autosuggest__input {
-  width: 240px;
-  height: 30px;
-  padding: 10px 20px;
-  font-family: Helvetica, sans-serif;
-  font-weight: 300;
-  font-size: 16px;
-  border: 1px solid #aaa;
-  border-radius: 4px;
-}
-
-.react-autosuggest__input:focus {
-  outline: none;
-}
-
-.react-autosuggest__container--open .react-autosuggest__input {
-  border-bottom-left-radius: 0;
-  border-bottom-right-radius: 0;
-}
-
-.react-autosuggest__suggestions-container {
-  position: absolute;
-  top: 51px;
-  width: 280px;
-  margin: 0;
-  padding: 0;
-  list-style-type: none;
-  border: 1px solid #aaa;
-  background-color: #fff;
-  font-family: Helvetica, sans-serif;
-  font-weight: 300;
-  font-size: 16px;
-  border-bottom-left-radius: 4px;
-  border-bottom-right-radius: 4px;
-  z-index: 2;
-}
-
-.react-autosuggest__suggestion {
-  cursor: pointer;
-  padding: 10px 20px;
-}
-
-.react-autosuggest__suggestion--focused {
-  background-color: #ddd;
-}
-
-.default-profile-picture {
-  width: 600px;
-  height: 300px;
-  background: url("../../src/img/Spy.png");
 }

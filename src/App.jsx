@@ -67,7 +67,16 @@ var App = React.createClass({
             );
         }
         else {
-            return <Login onChange={this.navChanged} />;
+            return (
+        <Grid>
+            <Row>
+                <Col xs={8} xsOffset={2}>  
+                    <Well id="appView" className="loginPage">
+                             <Login onChange={this.navChanged} />
+                    </Well>
+                </Col>
+            </Row>
+        </Grid>)
         }
     }
 });

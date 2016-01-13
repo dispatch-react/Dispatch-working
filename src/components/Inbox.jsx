@@ -119,7 +119,7 @@ var Inbox = React.createClass({
         }
 
     },
-    confirmMission: function (missionLink, message, e) {
+    confirmMission: function (userObj, userName, missionLink, message, e) {
         var nthis = this;
         e.preventDefault();
         ParseReact.Mutation.Destroy(message).dispatch()
@@ -128,7 +128,7 @@ var Inbox = React.createClass({
             ParseReact.Mutation.Create('Messages', {
                 content: 'Mission is active! Go for it',
                 createdBy: nthis.props.user,
-                writtenTo: message.createdBy,
+                writtenTo: userObj,
                 authorUserName: nthis.props.user.userName,
                 authorEmail: nthis.props.user.email,
                 type: 'applicationAccepted',
@@ -141,7 +141,7 @@ var Inbox = React.createClass({
             ParseReact.Mutation.Create('Messages', {
                 content: 'Application rejected',
                 createdBy: nthis.props.user,
-                writtenTo: message.createdBy,
+                writtenTo: userObj,
                 authorUserName: nthis.props.user.userName,
                 authorEmail: nthis.props.user.email,
                 type: 'applicationRejected',
@@ -184,7 +184,7 @@ var Inbox = React.createClass({
                             {this.data.inbox.map(function (c) {
                                     if (c.type === "missionAccepted") {
                                         Buttons = (
-                                            <form onSubmit={self.confirmMission.bind(self, c.missionLink, c)}>
+                                            <form onSubmit={self.confirmMission.bind(self, c.createdBy, c.authorUserName, c.missionLink, c)}>
                                                 <Col xs={2}><ButtonInput bsStyle="danger" type="submit"
                                                                          onClick={self.setButtonValueR}
                                                                          value="Reject"/></Col>
@@ -208,7 +208,7 @@ var Inbox = React.createClass({
                                                     <Row>
                                                         <Col xs={7}>
                                                             <Label bsStyle="info" id="msgAuthor"
-                                                                   onClick={self.setRecipientMissionReply.bind(self, c.createdBy, c.authorUserName, c.missionLink)}>{c.authorUserName}</Label>
+                                                                   onClick={self.setRecipientMissionReply.bind(self, c.createdBy, c.authorUserName, c.missionLink, c)}>{c.authorUserName}</Label>
                                                             <span id="msgInfo">{c.content}</span>
                                                         </Col>
                                                         {Buttons}

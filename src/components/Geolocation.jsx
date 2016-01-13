@@ -59,10 +59,8 @@ var CustomMarker = React.createClass({
 var Geolocation = React.createClass({
     mixins: [ParseReact.Mixin, TimerMixin],
     observe: function () {
-        var openMissions = new Parse.Query('Missions').equalTo('status', 'open');
-        var pendingMissions = new Parse.Query('Missions').equalTo('status', 'pending');
         return {
-            Missions: new Parse.Query.or(openMissions, pendingMissions)
+            Missions: new Parse.Query('Missions').equalTo('status', 'open');
         };
     },
     getInitialState(){
@@ -249,8 +247,9 @@ var Geolocation = React.createClass({
                 <div className="customMarkerValue animated fadeIn">{value}$</div>
                <div className="customMarker animated fadeIn" onClick={this.open.bind(this, marker)} style={{backgroundImage: `url(${icon})`, width: 32, height: 37, backgroundSize: 'cover', cursor: 'pointer'}}>
                 </div>
-             </div>
-            </OverlayView>
+            </div>
+        </OverlayView>
+    
         );
         }
 })} 
@@ -280,7 +279,7 @@ var Geolocation = React.createClass({
                     <Modal.Footer>
                         <Col xs={2} xsOffset={10}>
                             <form onSubmit={this.acceptMission}>
-                                <ButtonInput type="submit" value="Apply"/>
+                                <ButtonInput type="submit" value="Apply" disabled={(this.state.clickedMission.createdBy === this.props.user)}/>
                             </form>
                         </Col>
                     </Modal.Footer>

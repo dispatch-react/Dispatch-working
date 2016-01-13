@@ -82,20 +82,11 @@ var Login = React.createClass({
     /*Rendering the Login Page OR Register, based on this.state.login*/
 
     render: function() {
-        const wellStyles = {
-            maxWidth: 400,
-            margin: '0 auto 10px'
-        };
-        const spanStyles = {
-            margin: '0 0 0 10px'
-        };
         if (this.state.login) {
             return (
-                <div className="row">
-        <div className="well clearfix col-md-4 col-md-offset-4">
-            <h2>Welcome to the Login Screen</h2>
-        
-            {/* This is the login area! */}
+                <div>
+
+            <h2>Back to the hustle</h2>
         
          <form className="form-horizontal" onSubmit={this.logIn}>
          
@@ -113,33 +104,28 @@ var Login = React.createClass({
     
         <br/> {/*BUTTONS TO LOGIN OR GO TO REGISTRATION*/}
 
-  <div className="well" style={wellStyles}>
+  <div>
     
     <Button bsStyle="success" bsSize="large" block disabled={!(this.state.email.length && this.state.password.length)} type="submit">Sign In
-    <span className="fa fa-sign-in" style={spanStyles}></span>
+    <span className="fa fa-sign-in"></span>
     </Button>
     
     <Button bsStyle="primary" bsSize="large" type="reset" block id="register-btn" onClick={this.handleTypeChange}>
     Create
-    <span className="fa fa-user-plus" style={spanStyles}></span>
+    <span className="fa fa-user-plus"></span>
     </Button>
   </div>
 
       </form>
-
-      </div>
+      
       </div>)
         }
         else {
             /*RENDERING THE REGISTER PAGE*/
 
-            return (
-                <div className="row">
-                <div className="well clearfix col-md-4 col-md-offset-4">
+            return (<div>
 
       <h2>Ready to make some gwap motherfucker!?!</h2>
-        
-            {/* This is the signUp area! */}
         
       <form onSubmit={this.signUp} className="form-horizontal">
          
@@ -166,23 +152,20 @@ var Login = React.createClass({
     </div>
     
         <br/> {/*BUTTONS TO REGISTER*/}
-    <div className="well" style={wellStyles}>
+    <div>
         <Button bsStyle="info" bsSize="large" id="register-btn" block type="submit"
             disabled={!(this.state.email.length && this.state.password.length && (this.state.confPw === this.state.password))}
             >Sign Up
-          <span className="fa fa-user-plus" style={spanStyles}></span>
+          <span className="fa fa-user-plus"></span>
         </Button>
         
         {/* Button to go back */}
         <Button bsStyle="warning" bsSize="large" id="back-to-login" type="reset" block onClick={this.handleTypeChange}>Go back
-          <span className="fa fa-sign-in" style={spanStyles}></span>
+          <span className="fa fa-sign-in"></span>
         </Button>
     </div>
 
-      </form>
-
-      </div>
-      </div>);
+      </form> </div>);
         }
     }
 });
