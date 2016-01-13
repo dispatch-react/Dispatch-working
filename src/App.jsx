@@ -47,7 +47,7 @@ var App = React.createClass({
             return (
         <Grid>
             <Row className="show-grid">
-              <Col xs={10} xsOffset={1} md={6} mdOffset={3}>
+              <Col xs={10} xsOffset={1} md={8} mdOffset={2}>
                  <Well id="appView">
                     {
                         this.state.location === 1 ? <Profile user={this.data.user}/> :
