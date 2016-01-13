@@ -182,10 +182,11 @@ var Inbox = React.createClass({
                     <Row>
                         <Col xs={12}>
                             {this.data.inbox.map(function (c) {
+                                console.log(c);
                                     if (c.type === "missionAccepted") {
                                         Buttons = (
                                             <form onSubmit={self.confirmMission.bind(self, c.createdBy, c.authorUserName, c.missionLink, c)}>
-                                                <Col xs={2}><ButtonInput bsStyle="danger" type="submit"
+                                                <Col xs={2} xsOffset={3}><ButtonInput bsStyle="danger" type="submit"
                                                                          onClick={self.setButtonValueR}
                                                                          value="Reject"/></Col>
                                                 <Col xs={2}><ButtonInput bsStyle="success" type="submit"
@@ -195,23 +196,23 @@ var Inbox = React.createClass({
                                         )
                                     }
                                     else {
-                                        Buttons = (<form onSubmit={self.messageChange}>
-                                            <Col xs={2}><ButtonInput bsStyle="danger" type="submit" value="Delete"/></Col>
-                                            <Col xs={2}><ButtonInput bsStyle="info" type="submit" value="Reply"/></Col>
-                                        </form>)
+                                        Buttons = (<span></span>)
                                     }
-
                                     return (
                                         <Panel key={c.objectId}>
                                             <ListGroup fill>
                                                 <ListGroupItem>
                                                     <Row>
-                                                        <Col xs={7}>
+                                                        <Col xs={12}>
                                                             <Label bsStyle="info" id="msgAuthor"
                                                                    onClick={self.setRecipientMissionReply.bind(self, c.createdBy, c.authorUserName, c.missionLink, c)}>{c.authorUserName}</Label>
                                                             <span id="msgInfo">{c.content}</span>
                                                         </Col>
-                                                        {Buttons}
+                                                    </Row>
+                                                    <Row style={{"paddingTop": 10}}>
+
+                                                            {Buttons}
+
                                                     </Row>
                                                 </ListGroupItem>
 

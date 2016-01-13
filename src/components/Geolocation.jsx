@@ -60,8 +60,8 @@ var Geolocation = React.createClass({
     mixins: [ParseReact.Mixin, TimerMixin],
     observe: function () {
         return {
-            Missions: new Parse.Query('Missions').equalTo('status', 'open');
-        };
+            Missions: new Parse.Query('Missions').equalTo('status', 'open')
+        }
     },
     getInitialState(){
         return {
