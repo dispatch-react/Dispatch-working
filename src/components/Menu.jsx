@@ -34,17 +34,17 @@ var Menu = React.createClass({
 
         
         return (
-                <Nav bsStyle="pills" justified onSelect={this.props.onChange}> 
-                  <NavItem eventKey={1}><span className="fa fa-user fa-3x"></span>Profile</NavItem>
-                  <NavItem eventKey={2}>{badge}<span className="fa fa-comments fa-3x"></span>Inbox</NavItem>
-                  <NavItem eventKey={'home'}>
+                <Nav bsStyle="pills" justified onSelect={this.props.onChange}>
+                  <NavItem className="hvr-float navButtons" eventKey={1}><span className="fa fa-user fa-3x"></span>Profile</NavItem>
+                  <NavItem className="hvr-float navButtons" eventKey={2}>{badge}<span className="fa fa-comments fa-3x"></span>Inbox</NavItem>
+                  <NavItem className="hvr-float" eventKey={'home'}>
                   {
                       this.props.location === 'home' ? <CreateMissionForm user={this.props.user}/> :
-                      <HomeScreenButton />
+                      <HomeScreenButton className="hvr-float" />
                   }
                   </NavItem>
-                  <NavItem eventKey={3}><span className="fa fa-map-marker fa-3x"></span>Missions</NavItem>
-                  <NavItem eventKey={4}><span className="fa fa-gear fa-3x"></span>Settings</NavItem>
+                  <NavItem  className="hvr-float navButtons" eventKey={3}><span className="fa fa-map-marker fa-3x"></span>Missions</NavItem>
+                  <NavItem  className="hvr-float navButtons" eventKey={4}><span className="fa fa-gear fa-3x"></span>Settings</NavItem>
                 </Nav>
         )
     }
