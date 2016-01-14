@@ -25,6 +25,7 @@ img {
 #nav-icon {
         min-width: 70px;
         max-width: 100px;
+  -webkit-filter: saturate(0) contrast(200%);
     }
 
 #userInfo {
@@ -40,7 +41,7 @@ img {
     margin: 5px;
 }
 .nav {
-    background: rgba(144,144,144,0.5);
+  background:  rgba(255,255,255,0.6);
   border-radius: 10px;
     font-size: 14pt;
     margin-top: 6vh;
@@ -61,8 +62,7 @@ img {
     margin-left: 10px;
   }
   .navIcons {
-    color: #0C8C0C;
-    text-shadow: 2px 2px 5px #222;
+    color: #222;
   }
   .iconText {
     background: rgba(244,244,244, 0.9);
@@ -180,6 +180,7 @@ button > span {
 
 @media (min-width : 320px) {
   .nav {
+    padding-top: 1em;
     .badge {
       position: absolute;
       right: -12px;
@@ -205,9 +206,14 @@ button > span {
     }
   }
 }
-@media (max-width: 760px) {
+@media (min-width: 760px) {
   .nav {
-    padding-top: 1em;
+    padding-top: 0;
+    .badge {
+      position: absolute;
+      right: 35px;
+      top: 5px;
+    }
   }
 }
 @media (min-width : 980px) {
