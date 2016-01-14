@@ -1,3 +1,5 @@
+var customStyle = [{"featureType":"water","stylers":[{"saturation":43},{"lightness":-11},{"hue":"#0088ff"}]},{"featureType":"road","elementType":"geometry.fill","stylers":[{"hue":"#ff0000"},{"saturation":-100},{"lightness":99}]},{"featureType":"road","elementType":"geometry.stroke","stylers":[{"color":"#808080"},{"lightness":54}]},{"featureType":"landscape.man_made","elementType":"geometry.fill","stylers":[{"color":"#ece2d9"}]},{"featureType":"poi.park","elementType":"geometry.fill","stylers":[{"color":"#ccdca1"}]},{"featureType":"road","elementType":"labels.text.fill","stylers":[{"color":"#767676"}]},{"featureType":"road","elementType":"labels.text.stroke","stylers":[{"color":"#ffffff"}]},{"featureType":"poi","stylers":[{"visibility":"on"}]},{"featureType":"landscape.natural","elementType":"geometry.fill","stylers":[{"visibility":"on"},{"color":"#EBE5E0"}]},{"featureType":"poi.park","stylers":[{"visibility":"on"}]},{"featureType":"poi.sports_complex","stylers":[{"visibility":"on"}]}]
+
 var React = require("react");
 
 var reactGoogleMaps = require("react-google-maps");
@@ -195,6 +197,19 @@ var Geolocation = React.createClass({
                     containerElement={<div {...this.props} style={{height: "100vh"}} />}
                     googleMapElement={
                         <GoogleMap
+                            defaultOptions = {{
+                            zoomControlOptions: {
+                            position: google.maps.ControlPosition.RIGHT_CENTER
+                               },
+                            streetViewControlOptions: {
+                            position: google.maps.ControlPosition.RIGHT_CENTER
+                               },
+                               styles:customStyle,
+                               mapTypeControlOptions : {
+                               style: google.maps.MapTypeControlStyle.DROPDOWN_MENU,
+                               position: google.maps.ControlPosition.RIGHT_CENTER
+                               }
+                            }}
                             containerProps={{...this.props}}
                             ref="map"
                             onBoundsChanged={this.handleBoundsChanged}
@@ -233,6 +248,9 @@ var Geolocation = React.createClass({
          case "general labour":
          icon = "https://www.dropbox.com/s/1s36sjtppljktkl/manual-labour.png?dl=1";
          break;
+         case "bar, food, hospitality":
+         icon = "https://www.dropbox.com/s/e12js971ie5bifq/domestic-food-delivery.png?dl=1";
+         break;
          default:
          icon = "https://www.dropbox.com/s/dfjpx65j5v3wlih/pirates.png?dl=1";
          break;
@@ -256,7 +274,7 @@ var Geolocation = React.createClass({
                     </MarkerClusterer>
                         <SearchBox
                                 bounds={this.state.bounds}
-                                controlPosition={google.maps.ControlPosition.TOP_LEFT}
+                                controlPosition={google.maps.ControlPosition.TOP_CENTER}
                                 onPlacesChanged={this.handlePlacesChanged}
                                 ref="searchBox"
                                 placeholder="Search address"
@@ -279,7 +297,8 @@ var Geolocation = React.createClass({
                     <Modal.Footer>
                         <Col xs={2} xsOffset={10}>
                             <form onSubmit={this.acceptMission}>
-                                <ButtonInput type="submit" value="Apply" disabled={(this.state.clickedMission.createdBy === this.props.user)}/>
+                                <ButtonInput type="submit" value="Apply"
+                                             disabled={(this.state.clickedMission.createdBy === this.props.user)}/>
                             </form>
                         </Col>
                     </Modal.Footer>

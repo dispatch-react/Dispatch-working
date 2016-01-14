@@ -1,9 +1,7 @@
 $nav-clr: #160A20;
 
 #viewContent {
-   height: 68vh;
-    padding-top: 0.5em;
-    padding-bottom: 0.1em;
+    height: 100vh;
     overflow: auto;
 }
 
@@ -41,17 +39,14 @@ img {
     text-align: center;
     margin: 5px;
 }
-
 .nav {
-<<<<<<< HEAD
+    background: rgba(144,144,144,0.5);
+  border-radius: 10px;
     font-size: 14pt;
-=======
-    font-size: 16pt;
     margin-top: 6vh;
->>>>>>> 9a84da1ce0531140d30024837481ade3b11f8013
     height: 22vh;
     position: fixed;
-    bottom: -40px;
+    bottom: -55px;
     width: 80vw;
     margin-left: 10vw;
     span {
@@ -62,8 +57,23 @@ img {
   &>li>a:focus, &>li>a:hover {
     background-color: transparent;
   }
-  &>li{
-    margin: 20px;
+  &>li:first-child {
+    margin-left: 10px;
+  }
+  .navIcons {
+    color: #0C8C0C;
+    text-shadow: 2px 2px 5px #222;
+  }
+  .iconText {
+    background: rgba(244,244,244, 0.9);
+    border-radius: 10px;
+    margin-top: 9px;
+  }
+  .badge {
+    background: red;
+    text-shadow: none;
+    position: absolute;
+    right: 35px;
   }
 }
 /* Float */
@@ -86,9 +96,6 @@ img {
 .hvr-float:hover, .hvr-float:focus, .hvr-float:active {
   -webkit-transform: translateY(-8px);
   transform: translateY(-8px);
-}
-
-.navButtons {
 }
 
 .well {
@@ -130,7 +137,6 @@ button > span {
     margin: 1em 5px 1em 0;
 }
 
-
 @media (max-width: 760px){
     .nav {
         font-size: 10pt;
@@ -144,7 +150,6 @@ button > span {
       padding-bottom: 20px;
     }
 }
-
 @media (min-width: 0px){
     .nav-justified>li {
         display: table-cell;
@@ -162,7 +167,7 @@ button > span {
   #nav-icon {
     min-width: 20px;
     max-width: 50px;
-    padding-bottom: 20px;
+    padding-bottom: 10px;
   }
 }
 
@@ -173,8 +178,47 @@ button > span {
   }
 }
 
-
-
+@media (min-width : 320px) {
+  .nav {
+    .badge {
+      position: absolute;
+      right: -12px;
+      top: -4px
+    }
+    width: 100vw;
+    margin-left: 0;
+  }
+}
+@media (min-width : 480px) {
+  .nav {
+    .badge {
+      position: absolute;
+      right: -5px;
+    }
+  }
+}
+@media (min-width : 680px) {
+  .nav {
+    .badge {
+      position: absolute;
+      right: 5px;
+    }
+  }
+}
+@media (max-width: 760px) {
+  .nav {
+    padding-top: 1em;
+  }
+}
+@media (min-width : 980px) {
+  .nav {
+    .badge {
+      position: absolute;
+      right: 35px;
+      top: 5px;
+    }
+  }
+}
 .pac-container {
 	z-index: 999999;
 }

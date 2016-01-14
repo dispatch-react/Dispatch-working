@@ -183,13 +183,8 @@ var Inbox = React.createClass({
                                 console.log(c);
                                     if (c.type === "missionAccepted") {
                                         Buttons = (
-<<<<<<< HEAD
-                                            <form onSubmit={self.confirmMission.bind(self, c.createdBy, c.authorUserName, c.missionLink, c)}>
-                                                <Col xs={2} xsOffset={3}><ButtonInput bsStyle="danger" type="submit"
-=======
                                             <form onSubmit={self.acceptApplicant.bind(self, c.createdBy, c.authorUserName, c.missionLink, c)}>
                                                 <Col xs={2}><ButtonInput bsStyle="danger" type="submit"
->>>>>>> 9a84da1ce0531140d30024837481ade3b11f8013
                                                                          onClick={self.setButtonValueR}
                                                                          value="Reject"/></Col>
                                                 <Col xs={2}><ButtonInput bsStyle="success" type="submit"
