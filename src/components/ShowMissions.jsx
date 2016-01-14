@@ -42,8 +42,12 @@ var ShowMissions = React.createClass({
     getInitialState(){
         return {
             limit: 5,
-            activePage: 1
+            activePage: 1,
+            score: 5
         }
+    },
+    setScore: function(e){
+      this.setState({score: Number(e.target.value)})  
     },
     handleSelect(event, selectedEvent) {
         if (selectedEvent.eventKey !== this.state.activePage) {
@@ -72,12 +76,15 @@ var ShowMissions = React.createClass({
     confirmMission: function(missionLink, activeAgent, e) {
         var nthis = this;
         e.preventDefault();
+        var agent = (new Parse.Query('Users').get("objectId", activeAgent.objectId));
         var missionObj = (new Parse.Query('Missions').get(missionLink.objectId).then(function(res){
             res.set('status', 'complete');
-            res.set('completedBy', activeAgent);
-            res.set('score', 5);
+            res.set('completedBy', { __type: "Pointer", className: "_User", objectId: activeAgent.objectId });
+            res.set('score', nthis.state.score);
             res.save();
-        }))
+        })
+        );
+        this.refreshState();
     },
     render: function() {
         var self = this;
@@ -94,6 +101,8 @@ var ShowMissions = React.createClass({
                 <Col xs={12}>
                         {this.data.userOwnMissions.map(function(c) {
                         if (c.activeAgent) {
+                        console.log(c)
+                        console.log(c.activeAgent)
                             var inputRef = c.objectId
                             var agent = (<ListGroupItem><Label bsStyle="danger">Active Agent:</Label> <span id="missionInfo">{c.acceptedAgentUsername}</span></ListGroupItem>)
                             var badge = (<Badge pullRight>Active!</Badge>)
@@ -101,12 +110,12 @@ var ShowMissions = React.createClass({
                                 <form onSubmit={self.confirmMission.bind(self, c, c.activeAgent)} className="form-horizontal">
                                     <div>
                                         <Col xs={6} xsOffset={2}>
-                            <Input type="select" placeholder="Set Score" ref={inputRef} label="Set Score" labelClassName="col-xs-8" wrapperClassName="col-xs-4" className="ratingInput">
-                              <option value="1">1</option>
-                              <option value="2">2</option>
-                              <option value="3">3</option>
-                              <option value="4">4</option>
-                              <option value="5">5</option>
+                            <Input type="select" placeholder="Set Score" onChange={self.setScore} label="Set Score" labelClassName="col-xs-6" wrapperClassName="col-xs-6" className="ratingInput">
+                              <option value={1}>1</option>
+                              <option value={2}>2</option>
+                              <option value={3}>3</option>
+                              <option value={4}>4</option>
+                              <option value={5}>5</option>
                             </Input>
                                         </Col>
                                         <Col xs={4}>
@@ -149,7 +158,6 @@ var ShowMissions = React.createClass({
         <ListGroup fill>
             <ListGroupItem><Label bsStyle="info">Brief:</Label> <span id="missionInfo">{c.description}</span></ListGroupItem>
             <ListGroupItem><Label bsStyle="danger">Value:</Label> <span id="missionInfo">{c.value}</span></ListGroupItem>
-            <ListGroupItem><Label bsStyle="warning">Final Score:</Label> <span id="missionInfo">{c.score}</span></ListGroupItem>
         </ListGroup>
     </Panel>
                             );
