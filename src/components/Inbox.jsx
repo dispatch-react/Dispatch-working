@@ -228,7 +228,7 @@ var Inbox = React.createClass({
                                 </ListGroup>
                             </Col>
                             <Col xs={4} md={4}>
-                                {this.state.userProfilePicture ? <Image id="profile-pic" src={this.state.userProfilePicture}/> : <Image id="profile-pic" src="../src/img/Spy.png" />}
+                                {this.state.userProfilePicture ? <Image id="profile-pic" src={this.state.userProfilePicture}/> : <Image id="profile-pic" src="img/Spy.png" />}
                             </Col>
                         </Row>
                         <Row>

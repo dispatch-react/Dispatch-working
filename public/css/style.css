@@ -1,0 +1,55 @@
+#appView {
+  height: 100vh; }
+
+body {
+  font-size: 12pt; }
+
+a {
+  color: #160A20; }
+
+img {
+  max-width: 100%; }
+
+#nav-icon {
+  min-width: 70px;
+  max-width: 100px; }
+
+#userInfo {
+  float: right; }
+
+#missionInfo {
+  float: right; }
+
+#updatePhoto {
+  text-align: center;
+  margin: 5px; }
+
+.nav {
+  font-size: 12pt;
+  padding-top: 10px; }
+  .nav span {
+    display: block; }
+
+.gm-style-iw {
+  text-align: center; }
+
+.gm-style-iw + div {
+  visibility: hidden; }
+
+.infoWindow {
+  font-family: 'Droid Sans', 'Helvetica', Arial, sans-serif;
+  font-weight: bold; }
+
+@media (max-width: 906px) {
+  .nav {
+    font-size: 8pt; }
+    .nav > li > a {
+      padding: 0; } }
+@media (min-width: 0px) {
+  .nav-justified > li {
+    display: table-cell;
+    width: 1%; } }
+.pac-container {
+  z-index: 999999; }
+
+/*# sourceMappingURL=style.css.map */
