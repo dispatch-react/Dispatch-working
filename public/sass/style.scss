@@ -1,6 +1,9 @@
 $nav-clr: #160A20;
 
 #viewContent {
+   height: 68vh;
+    padding-top: 0.5em;
+    padding-bottom: 0.1em;
     overflow: auto;
 }
 
@@ -40,7 +43,12 @@ img {
 }
 
 .nav {
+<<<<<<< HEAD
     font-size: 14pt;
+=======
+    font-size: 16pt;
+    margin-top: 6vh;
+>>>>>>> 9a84da1ce0531140d30024837481ade3b11f8013
     height: 22vh;
     position: fixed;
     bottom: -40px;
@@ -97,6 +105,9 @@ img {
     margin-top: 20vh;
 }
 
+.ratingInput {
+    min-width: 55px;
+}
 
 
 button > span {

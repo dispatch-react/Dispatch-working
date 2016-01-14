@@ -7,6 +7,7 @@ var Col = require('react-bootstrap').Col;
 var Panel = require('react-bootstrap').Panel;
 var Label = require('react-bootstrap').Label;
 var Badge = require('react-bootstrap').Badge;
+var Input = require('react-bootstrap').Input;
 var ListGroup = require('react-bootstrap').ListGroup;
 var ButtonGroup = require('react-bootstrap').ButtonGroup;
 var Button = require('react-bootstrap').Button;
@@ -22,13 +23,20 @@ var ShowMissions = React.createClass({
     //https://github.com/ParsePlatform/ParseReact/blob/master/docs/api/Mixin.md
     observe: function(currentProps, currentState) {
         const skip = currentState.limit * (currentState.activePage - 1);
+        var myCompleted = (new Parse.Query("Missions")).equalTo("createdBy", this.props.user).equalTo('status', 'complete')
+        var iCompleted = (new Parse.Query("Missions")).equalTo("completedBy", this.props.user).equalTo('status', 'complete')
+            
         return {
-            userOwnMissions: (new Parse.Query("Missions")).equalTo("createdBy", this.props.user).ascending('createdAt').skip(skip).limit(this.state.limit),
+            
+            userCompletedMissions: Parse.Query.or(myCompleted, iCompleted).skip(skip).limit(this.state.limit),
+            userCompletedMissionsTotal: Parse.Query.or(myCompleted, iCompleted),
+            
+            userOwnMissions: (new Parse.Query("Missions")).equalTo("createdBy", this.props.user).notEqualTo('status', 'complete').ascending('createdAt').skip(skip).limit(this.state.limit),
             userActiveMissions: (new Parse.Query("Missions")).equalTo("activeAgent", this.props.user).ascending('createdAt').skip(skip).limit(this.state.limit),
-            userCompletedMissions: (new Parse.Query("Missions")).equalTo("completedBy", this.props.user).ascending('createdAt').skip(skip).limit(this.state.limit),
-            userOwnMissionsTotal: (new Parse.Query("Missions")).equalTo("createdBy", this.props.user).ascending('createdAt'),
+            userCompletedMissions2: (new Parse.Query("Missions")).equalTo("createdBy", this.props.user).equalTo('status', 'complete').ascending('createdAt').skip(skip).limit(this.state.limit),
+            userOwnMissionsTotal: (new Parse.Query("Missions")).equalTo("createdBy", this.props.user).notEqualTo('status', 'complete').ascending('createdAt'),
             userActiveMissionsTotal: (new Parse.Query("Missions")).equalTo("activeAgent", this.props.user),
-            userCompletedMissionsTotal: (new Parse.Query("Missions")).equalTo("completedBy", this.props.user).ascending('createdAt')
+            userCompletedMissionsTotal2: (new Parse.Query("Missions")).equalTo("completedBy", this.props.user).equalTo('status', 'complete').ascending('createdAt')
         };
     },
     getInitialState(){
@@ -60,48 +68,16 @@ var ShowMissions = React.createClass({
         )
     },
     setButtonValueR: function() {this.setState({buttonValue: "Reject"})},
-    setButtonValueA: function() {
-        this.setState({buttonValue: "Accept"})},
-    confirmMission: function(missionLink, e) {
+    setButtonValueA: function() {this.setState({buttonValue: "Accept"})},
+    confirmMission: function(missionLink, activeAgent, e) {
         var nthis = this;
         e.preventDefault();
-
-        // delete Messages Related to this mission
-        var relatedMessages = new Parse.Query("Messages");
-        relatedMessages.equalTo("missionLink", missionLink)
-        relatedMessages.find().then(function(relMsg){
-            relMsg.forEach(function(m){
-                m.destroy();
-            })
-        })
-
-        if (this.state.buttonValue === "Accept") {
-            ParseReact.Mutation.Set(missionLink, {status: 'active', activeAgent: this.props.user}).dispatch()
-             ParseReact.Mutation.Create('Messages', {
-               content: 'Mission is active! Go for it',
-               createdBy: nthis.props.user,
-               writtenTo: missionLink.createdBy,
-               authorUserName: nthis.props.user.userName,
-               authorEmail: nthis.props.user.email,
-               type: 'applicationAccepted',
-               missionLink: missionLink,
-               read: false
-            }).dispatch()
-            alert('Mission is set to active!')
-        }
-        else {
-            ParseReact.Mutation.Create('Messages', {
-               content: 'Application rejected',
-               createdBy: nthis.props.user,
-               writtenTo: message.createdBy,
-               authorUserName: nthis.props.user.userName,
-               authorEmail: nthis.props.user.email,
-               type: 'applicationRejected',
-               missionLink: missionLink,
-               read: false
-            }).dispatch()
-            alert('Application Rejected')
-        }
+        var missionObj = (new Parse.Query('Missions').get(missionLink.objectId).then(function(res){
+            res.set('status', 'complete');
+            res.set('completedBy', activeAgent);
+            res.set('score', 5);
+            res.save();
+        }))
     },
     render: function() {
         var self = this;
@@ -117,31 +93,46 @@ var ShowMissions = React.createClass({
             <Row>
                 <Col xs={12}>
                         {this.data.userOwnMissions.map(function(c) {
-                        if (c.applicants) {
- 
-                            applicants = (c.applicants.map(function(a){
-                                return <ListGroupItem>
-                                            <Label bsStyle="warning">Applicant:</Label>
-                                            <span id="missionInfo"><Label bsStyle="info">{a.userName}</Label></span>
-                                        <Row><Col xs={6} xsOffset={6}>
-                                        <form onSubmit={self.confirmMission.bind(self, c)}>
-                                        <ButtonGroup>
-                                            <Button bsStyle="success" onClick={self.setButtonValueA} type="submit" value="Accept" pullRight>Accept</Button>
-                                            <Button bsStyle="danger" onClick={self.setButtonValueR} type="submit" value="Reject" pullRight>Reject</Button>
-                                        </ButtonGroup>
-                                        </form>
-                                        </Col></Row>
-                                        </ListGroupItem>
-                            }))
+                        if (c.activeAgent) {
+                            var inputRef = c.objectId
+                            var agent = (<ListGroupItem><Label bsStyle="danger">Active Agent:</Label> <span id="missionInfo">{c.acceptedAgentUsername}</span></ListGroupItem>)
+                            var badge = (<Badge pullRight>Active!</Badge>)
+                            var confirmButton = (
+                                <form onSubmit={self.confirmMission.bind(self, c, c.activeAgent)} className="form-horizontal">
+                                    <div>
+                                        <Col xs={6} xsOffset={2}>
+                            <Input type="select" placeholder="Set Score" ref={inputRef} label="Set Score" labelClassName="col-xs-8" wrapperClassName="col-xs-4" className="ratingInput">
+                              <option value="1">1</option>
+                              <option value="2">2</option>
+                              <option value="3">3</option>
+                              <option value="4">4</option>
+                              <option value="5">5</option>
+                            </Input>
+                                        </Col>
+                                        <Col xs={4}>
+                            <Button bsStyle="success" type="submit">Mark as Completed</Button>
+                                        </Col>
+                                </div>
+                            </form>)
+                        }
+                        else {
+                            agent = (<span></span>)
+                            badge = (<span></span>)
+                            confirmButton = (<span></span>)
                         }
                           return(
-    <Panel collapsible key={c.objectId} header={c.title}>
+                         
+    <Panel collapsible key={c.objectId} header={[c.title, badge]}>
         <ListGroup fill>
             <ListGroupItem><Label bsStyle="info">Brief:</Label> <span id="missionInfo">{c.description}</span></ListGroupItem>
-            <ListGroupItem><Label bsStyle="danger">Value:</Label> <span id="missionInfo">{c.value}</span></ListGroupItem>
-            {applicants}
+            <ListGroupItem><Label bsStyle="warning">Value:</Label> <span id="missionInfo">{c.value}</span></ListGroupItem>
+            {agent}
+            <Row style={{padding: '10px 15px 0px 0px'}}>
+            {confirmButton}
+            </Row>
         </ListGroup>
     </Panel>
+    
                             );
                         })}
                     {this.renderPagination(this.data.userOwnMissionsTotal)}
@@ -177,6 +168,7 @@ var ShowMissions = React.createClass({
         <ListGroup fill>
             <ListGroupItem><Label bsStyle="info">Brief:</Label> <span id="missionInfo">{c.description}</span></ListGroupItem>
             <ListGroupItem><Label bsStyle="danger">Value:</Label> <span id="missionInfo">{c.value}</span></ListGroupItem>
+            <ListGroupItem><Label bsStyle="success">Agent:</Label> <span id="missionInfo">{c.acceptedAgentUsername}</span></ListGroupItem>
             <ListGroupItem><Label bsStyle="warning">Final Score:</Label> <span id="missionInfo">{c.score}</span></ListGroupItem>
         </ListGroup>
     </Panel>

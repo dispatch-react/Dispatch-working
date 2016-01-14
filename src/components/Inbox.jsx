@@ -48,7 +48,6 @@ var Inbox = React.createClass({
         //Find the user and set the state.
         var user = new Parse.Query(Parse.User);
         user.get(userObj.objectId).then(function (user) {
-            console.log(user.get("profile_pic"))
             self.setState({
                 userEmail: user.get("email"),
                 userScore: user.get("RatingScore"),
@@ -56,7 +55,6 @@ var Inbox = React.createClass({
                 userHometown: user.get("Hometown"),
                 agent: user.get("userName")
             })
-
         });
 
         this.setState({
@@ -119,12 +117,12 @@ var Inbox = React.createClass({
         }
 
     },
-    confirmMission: function (userObj, userName, missionLink, message, e) {
+    acceptApplicant: function (userObj, userName, missionLink, message, e) {
         var nthis = this;
         e.preventDefault();
         ParseReact.Mutation.Destroy(message).dispatch()
         if (this.state.buttonValue === "Accept") {
-            ParseReact.Mutation.Set(missionLink, {status: 'active'}).dispatch()
+            ParseReact.Mutation.Set(missionLink, {status: 'active', activeAgent: userObj, acceptedAgentUsername: userName}).dispatch()
             ParseReact.Mutation.Create('Messages', {
                 content: 'Mission is active! Go for it',
                 createdBy: nthis.props.user,
@@ -185,8 +183,13 @@ var Inbox = React.createClass({
                                 console.log(c);
                                     if (c.type === "missionAccepted") {
                                         Buttons = (
+<<<<<<< HEAD
                                             <form onSubmit={self.confirmMission.bind(self, c.createdBy, c.authorUserName, c.missionLink, c)}>
                                                 <Col xs={2} xsOffset={3}><ButtonInput bsStyle="danger" type="submit"
+=======
+                                            <form onSubmit={self.acceptApplicant.bind(self, c.createdBy, c.authorUserName, c.missionLink, c)}>
+                                                <Col xs={2}><ButtonInput bsStyle="danger" type="submit"
+>>>>>>> 9a84da1ce0531140d30024837481ade3b11f8013
                                                                          onClick={self.setButtonValueR}
                                                                          value="Reject"/></Col>
                                                 <Col xs={2}><ButtonInput bsStyle="success" type="submit"
