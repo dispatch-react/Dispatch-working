@@ -7,7 +7,7 @@ var HomeScreenButton = React.createClass({
         render() {
 
             return (
-        <img src="../src/img/logo-med.png" id="nav-icon"/>
+        <img src="img/logo-med.png" id="nav-icon"/>
             );
         }
 });

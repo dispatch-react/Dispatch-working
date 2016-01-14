@@ -135,7 +135,7 @@ var CreateMissionForm = React.createClass({
 
             return (
                 <div>
-        <img onClick={this.open} src="../src/img/logo-med.png" id="nav-icon"/>
+        <img onClick={this.open} src="img/logo-med.png" id="nav-icon"/>
 
         <Modal show={this.state.showModal} onHide={this.close}>
           <form onSubmit={this.handleFormSubmit}>

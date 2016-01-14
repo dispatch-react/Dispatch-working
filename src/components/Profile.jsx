@@ -71,7 +71,7 @@ var Profile = React.createClass({
             profilePic = <Image id="profile-pic" src={this.props.user.profile_pic._url} rounded/>
         }
         else {
-            profilePic = <Image id="profile-pic" src="../src/img/bullhorn.png" rounded/>
+            profilePic = <Image id="profile-pic" src="img/bullhorn.png" rounded/>
         }
         return (
             <div id="viewContent">
