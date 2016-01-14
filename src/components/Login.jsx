@@ -46,7 +46,6 @@ var Login = React.createClass({
     logIn: function(e) {
         var self = this;
         e.preventDefault();
-        console.log('called signUp')
         Parse.User.logIn(this.state.email, this.state.password).then(function(user) {
             //alert('welcome back!'); //ALERT will mess with the loading animation
             self.props.onChange('home')
@@ -133,22 +132,22 @@ var Login = React.createClass({
     
     <div className="input-group">
       <span className="input-group-addon"><i className="fa fa-at"></i></span>
-      <input type="text" className="form-control" placeholder=" Email" id="formEmail" onChange={this.handleEmailChange}></input>
+      <input type="email" className="form-control" placeholder=" Email" id="formEmail" onChange={this.handleEmailChange} required></input>
     </div>
     
     <div className="input-group">
       <span className="input-group-addon"><i className="fa fa-user"></i></span>
-      <input type="text" className="form-control" placeholder=" Username" id="formUsername" onChange={this.handleUsernameChange}></input>
+      <input type="text" className="form-control" placeholder=" Username" id="formUsername" onChange={this.handleUsernameChange} required></input>
     </div>
 
     <div className="input-group">
       <span className="input-group-addon"><i className="fa fa-key"></i></span>
-      <input type="text" className="form-control" placeholder=" Password" id="formPw" onChange={this.handlePasswordChange}></input>
+      <input type="password" className="form-control" placeholder=" Password" id="formPw" onChange={this.handlePasswordChange} required></input>
     </div>
     
     <div className="input-group" id="pwConfirm">
       <span className="input-group-addon"><i className="fa fa-key"></i></span>
-      <input type="text" className="form-control" placeholder=" Confirm Password" onChange={this.handleConfPasswordChange}></input>
+      <input type="password" className="form-control" placeholder=" Confirm Password" onChange={this.handleConfPasswordChange} required></input>
     </div>
     
         <br/> {/*BUTTONS TO REGISTER*/}

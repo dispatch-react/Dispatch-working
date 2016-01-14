@@ -89,6 +89,7 @@ var CreateMissionForm = React.createClass({
                 remote: self.state.remote,
                 missionAttachment: att,
                 createdBy: self.props.user,
+                createdByUsername: self.props.user.userName,
                 status: "open"
             });
 
@@ -145,7 +146,7 @@ var CreateMissionForm = React.createClass({
             
               
     <Input type="text" placeholder="Mission Title" onChange={this.handleTitleChange} />
-    <Input type="textarea" label="Mission description" placeholder="140 characters max" onChange={this.handleDescriptionChange}/>
+    <Input type="textarea" label="Mission description" onChange={this.handleDescriptionChange}/>
     <Input type="text" onChange={this.handleValueChange} addonBefore="Set Bounty" addonAfter="$" />
     <Autocomplete setLocation={this.handleStartLocationChange} className="autocomplete"/>
     

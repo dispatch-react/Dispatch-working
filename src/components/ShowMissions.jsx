@@ -132,8 +132,8 @@ var ShowMissions = React.createClass({
                           return(
                          
     <Panel collapsible key={c.objectId} header={[c.title, badge]}>
+            <Label bsStyle="info">Mission Brief:</Label> <span id="missionInfo">{c.description}</span>
         <ListGroup fill>
-            <ListGroupItem><Label bsStyle="info">Brief:</Label> <span id="missionInfo">{c.description}</span></ListGroupItem>
             <ListGroupItem><Label bsStyle="warning">Value:</Label> <span id="missionInfo">{c.value}</span></ListGroupItem>
             {agent}
             <Row style={{padding: '10px 15px 0px 0px'}}>
@@ -155,9 +155,10 @@ var ShowMissions = React.createClass({
                         {this.data.userActiveMissions.map(function(c) {
                           return(
     <Panel collapsible key={c.objectId} header={c.title}>
+            <Label bsStyle="info">Mission Brief:</Label> <span id="missionInfo">{c.description}</span>
         <ListGroup fill>
-            <ListGroupItem><Label bsStyle="info">Brief:</Label> <span id="missionInfo">{c.description}</span></ListGroupItem>
             <ListGroupItem><Label bsStyle="danger">Value:</Label> <span id="missionInfo">{c.value}</span></ListGroupItem>
+            <msgUser missionLink={c} recipient={c.createdBy} recipientUsername={c.createdByUsername} user={this.props.user}/>
         </ListGroup>
     </Panel>
                             );
@@ -173,8 +174,8 @@ var ShowMissions = React.createClass({
                         {this.data.userCompletedMissions.map(function(c) {
                           return(
     <Panel collapsible key={c.objectId} header={c.title}>
+            <Label bsStyle="info">Msssion Brief:</Label> <span id="missionInfo">{c.description}</span>
         <ListGroup fill>
-            <ListGroupItem><Label bsStyle="info">Brief:</Label> <span id="missionInfo">{c.description}</span></ListGroupItem>
             <ListGroupItem><Label bsStyle="danger">Value:</Label> <span id="missionInfo">{c.value}</span></ListGroupItem>
             <ListGroupItem><Label bsStyle="success">Agent:</Label> <span id="missionInfo">{c.acceptedAgentUsername}</span></ListGroupItem>
             <ListGroupItem><Label bsStyle="warning">Final Score:</Label> <span id="missionInfo">{c.score}</span></ListGroupItem>
