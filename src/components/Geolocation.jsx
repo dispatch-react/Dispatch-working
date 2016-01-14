@@ -194,7 +194,7 @@ var Geolocation = React.createClass({
         return (
             <div id="viewContent">
                 <GoogleMapLoader
-                    containerElement={<div {...this.props} style={{height: "75vh"}} />}
+                    containerElement={<div {...this.props} style={{height: "100vh"}} />}
                     googleMapElement={
                         <GoogleMap
                             defaultOptions = {{
