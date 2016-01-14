@@ -29,8 +29,8 @@ var Settings = React.createClass({
         return (
             <div id="viewContent">
                 <Row>
-                   <Col xs={4} xsOffset={4}>
-                       <Button bsStyle="warning" onClick={this.props.logOut}>Log Out</Button>
+                   <Col xs={6} xsOffset={3}>
+                       <Button className="logOutBtn" bsStyle="warning" onClick={this.props.logOut}>Log Out</Button>
                    </Col>
                 </Row>
             </div>
