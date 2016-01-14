@@ -16,6 +16,8 @@ var Pagination = require('react-bootstrap').Pagination;
 var Pager = require('react-bootstrap').Pager;
 var PageItem = require('react-bootstrap').PageItem;
 
+var MsgUser = require('./MsgUser.jsx');
+
 var ShowMissions = React.createClass({
     mixins: [ParseReact.Mixin],
     //Check parse-react documentation
@@ -75,8 +77,19 @@ var ShowMissions = React.createClass({
     setButtonValueA: function() {this.setState({buttonValue: "Accept"})},
     confirmMission: function(missionLink, activeAgent, e) {
         var nthis = this;
+        
+        
         e.preventDefault();
-        var agent = (new Parse.Query('Users').get("objectId", activeAgent.objectId));
+        var agent = (new Parse.Query('Users').get("objectId", activeAgent.objectId).then(function(res){
+            res.add('ratings', nthis.state.score);
+            var sum;
+            var totalScores = res.ratings.length;
+            res.ratings.forEach(function(e){
+                sum += Number(e);
+            });
+            res.set('userRating', sum/totalScores);
+            res.save();
+        }));
         var missionObj = (new Parse.Query('Missions').get(missionLink.objectId).then(function(res){
             res.set('status', 'complete');
             res.set('completedBy', { __type: "Pointer", className: "_User", objectId: activeAgent.objectId });
@@ -84,7 +97,8 @@ var ShowMissions = React.createClass({
             res.save();
         })
         );
-        this.refreshState();
+        
+        this.setState();
     },
     render: function() {
         var self = this;
@@ -100,11 +114,12 @@ var ShowMissions = React.createClass({
             <Row>
                 <Col xs={12}>
                         {this.data.userOwnMissions.map(function(c) {
+                        var style = {display: 'inline'}
                         if (c.activeAgent) {
-                        console.log(c)
-                        console.log(c.activeAgent)
                             var inputRef = c.objectId
-                            var agent = (<ListGroupItem><Label bsStyle="danger">Active Agent:</Label> <span id="missionInfo">{c.acceptedAgentUsername}</span></ListGroupItem>)
+                            var agent = (<ListGroupItem><Label bsStyle="danger">Active Agent:</Label> 
+                                            <MsgUser missionLink={c} recipient={c.activeAgent} recipientUsername={c.acceptedAgentUsername} user={self.props.user}/>
+                                        </ListGroupItem>)
                             var badge = (<Badge pullRight>Active!</Badge>)
                             var confirmButton = (
                                 <form onSubmit={self.confirmMission.bind(self, c, c.activeAgent)} className="form-horizontal">
@@ -158,7 +173,10 @@ var ShowMissions = React.createClass({
             <Label bsStyle="info">Mission Brief:</Label> <span id="missionInfo">{c.description}</span>
         <ListGroup fill>
             <ListGroupItem><Label bsStyle="danger">Value:</Label> <span id="missionInfo">{c.value}</span></ListGroupItem>
-            <msgUser missionLink={c} recipient={c.createdBy} recipientUsername={c.createdByUsername} user={this.props.user}/>
+            <ListGroupItem>
+                <Label bsStyle="warning">Dispatchr:</Label>
+                <MsgUser missionLink={c} recipient={c.createdBy} recipientUsername={c.createdByUsername} user={self.props.user} />
+            </ListGroupItem>
         </ListGroup>
     </Panel>
                             );

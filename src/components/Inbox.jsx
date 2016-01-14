@@ -74,14 +74,11 @@ var Inbox = React.createClass({
     sendMessage: function (e) {
         e.preventDefault();
         var nthis = this;
-        var att;
-        var fileUpload = this.refs.fileUpload.getInputDOMNode().files;
 
         function sendMessage() {
 
             var creator = ParseReact.Mutation.Create('Messages', {
                 content: nthis.state.text,
-                attachment: att,
                 createdBy: nthis.props.user,
                 writtenTo: nthis.state.recipient,
                 authorUserName: nthis.props.user.userName,
@@ -95,26 +92,15 @@ var Inbox = React.createClass({
                     alert('message sent')
                     nthis.refs.formElement.reset();
                     nthis.setState({recipientUserName: 'No user selected...'})
+                    nthis.close();
                 },
                 function (error) {
-                    alert('there was an error, check your self')
+                    alert('there was an error, check your inputs')
                 });
         }
 
-        //Check for uploaded file and call sendMsg either way
+        sendMessage();
 
-        if (fileUpload.length === 0) {
-            var att = null;
-            sendMessage();
-
-        }
-        else {
-            var file = fileUpload[0];
-            att = new Parse.File("attach", file);
-            att.save().then(function () {
-                sendMessage();
-            });
-        }
 
     },
     acceptApplicant: function (userObj, userName, missionLink, message, e) {
@@ -178,16 +164,15 @@ var Inbox = React.createClass({
 
                 <Panel header={title} bsStyle="success">
                     <Row>
-                        <Col xs={12}>
+                        
                             {this.data.inbox.map(function (c) {
-                                console.log(c);
                                     if (c.type === "missionAccepted") {
                                         Buttons = (
                                             <form onSubmit={self.acceptApplicant.bind(self, c.createdBy, c.authorUserName, c.missionLink, c)}>
-                                                <Col xs={2}><ButtonInput bsStyle="danger" type="submit"
+                                                <Col xs={1}><ButtonInput bsStyle="danger" type="submit"
                                                                          onClick={self.setButtonValueR}
                                                                          value="Reject"/></Col>
-                                                <Col xs={2}><ButtonInput bsStyle="success" type="submit"
+                                                <Col xs={1}><ButtonInput bsStyle="success" type="submit"
                                                                          onClick={self.setButtonValueA}
                                                                          value="Accept"/></Col>
                                             </form>
@@ -201,27 +186,23 @@ var Inbox = React.createClass({
                                             <ListGroup fill>
                                                 <ListGroupItem>
                                                     <Row>
-                                                        <Col xs={12}>
+                                                        <Col xs={2}>
                                                             <Label bsStyle="info" id="msgAuthor"
                                                                    onClick={self.setRecipientMissionReply.bind(self, c.createdBy, c.authorUserName, c.missionLink, c)}>{c.authorUserName}</Label>
+                                                        </Col>
+                                                        <Col xs={7}>
                                                             <span id="msgInfo">{c.content}</span>
                                                         </Col>
-                                                    </Row>
-                                                    <Row style={{"paddingTop": 10}}>
-
-                                                            {Buttons}
-
+                                                        {Buttons}
                                                     </Row>
                                                 </ListGroupItem>
-
-
                                             </ListGroup>
 
                                         </Panel>
                                     )
                                 }
                             )}
-                        </Col>
+                        
                     </Row>
                 </Panel>
 
@@ -269,7 +250,7 @@ var Inbox = React.createClass({
                                         </Col>
                                         <Col xs={10}>
                                             <Input type="textarea" placeholder="Message Body"
-                                                   onChange={this.handleBodyChange}/>
+                                                   onChange={this.handleBodyChange} required/>
                                         </Col>
                                     </Row>
                                     <Row>

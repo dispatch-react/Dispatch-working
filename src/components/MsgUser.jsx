@@ -12,20 +12,19 @@ var Label = require('react-bootstrap').Label;
 var ListGroup = require('react-bootstrap').ListGroup;
 var ListGroupItem = require('react-bootstrap').ListGroupItem;
 var Modal = require('react-bootstrap').Modal;
-var Profile = require('./Profile.jsx');
 var Image = require('react-bootstrap').Image;
 
-var msgUser = React.createClass({
+var MsgUser = React.createClass({
     mixins: [ParseReact.Mixin],
     getInitialState: function () {
         return {
             text: '',
-            messageType: 'reply',
-            recipient: '',
-            recipientUserName: 'No user selected...',
+            messageType: 'activeReply',
+            recipient: this.props.recipient,
+            recipientUserName: this.props.recipientUsername,
             showModal: false,
+            missionLink: this.props.missionLink,
             agent: null,
-            userEmail: null,
             userProfilePicture: null,
             userScore: null,
             userHometown: null
@@ -46,7 +45,7 @@ var msgUser = React.createClass({
                 showModal: true,
         })
     },
-        setRecipientMissionReply: function (userObj, userName, missionLink) {
+        componentDidMount: function () {
         let self = this;
 
         //DO NOT DELETE! KEEP FOR REFERENCE!
@@ -61,7 +60,8 @@ var msgUser = React.createClass({
 
         //Find the user and set the state.
         var user = new Parse.Query(Parse.User);
-        user.get(self.props.recipient.objectId).then(function (user) {
+        user.get(this.props.recipient.objectId).then(function (user) {
+            console.log(user);
             self.setState({
                 userEmail: user.get("email"),
                 userScore: user.get("RatingScore"),
@@ -70,13 +70,6 @@ var msgUser = React.createClass({
                 agent: user.get("userName")
             })
         });
-        this.setState({
-            recipient: self.props.recipient,
-            recipientUserName: self.props.recipientUsername,
-            messageType: 'activeReply',
-            missionLink: this.props.missionLink,
-            showModal: true
-        })
     },
         handleBodyChange: function (e) {
             this.setState({
@@ -86,14 +79,11 @@ var msgUser = React.createClass({
         sendMessage: function (e) {
             e.preventDefault();
             var nthis = this;
-            var att;
-            var fileUpload = this.refs.fileUpload.getInputDOMNode().files;
     
             function sendMessage() {
     
                 var creator = ParseReact.Mutation.Create('Messages', {
                     content: nthis.state.text,
-                    attachment: att,
                     createdBy: nthis.props.user,
                     writtenTo: nthis.state.recipient,
                     authorUserName: nthis.props.user.userName,
@@ -112,34 +102,17 @@ var msgUser = React.createClass({
                         alert('there was an error, check your self')
                     });
             }
-    
-            //Check for uploaded file and call sendMsg either way
-    
-            if (fileUpload.length === 0) {
-                var att = null;
                 sendMessage();
-    
-            }
-            else {
-                var file = fileUpload[0];
-                att = new Parse.File("attach", file);
-                att.save().then(function () {
-                    sendMessage();
-                });
-            }
-
+                this.close();
     },
         render: function() {
     return (
-        <div>
-            <ListGroupItem>
-                <Label bsStyle="warning">Dispatchr:</Label> 
-                <span id="missionInfo" onClick={this.show}>{this.props.recipientUsername}</span>
-            </ListGroupItem>
+        <div style={{display: 'inline'}}>
+            <Label bsStyle="info" id="missionInfo" onClick={this.open} id="msgAuthor">{this.props.recipientUsername}</Label>
             
-                <Modal show={this.state.showModal} onHide={this.close}>
+            <Modal show={this.state.showModal} onHide={this.close}>
                     <Modal.Header closeButton>
-                        <Modal.Title>Agent Profile</Modal.Title>
+                        <Modal.Title>Dispatchr Profile</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
                         <Row>
@@ -191,8 +164,8 @@ var msgUser = React.createClass({
                         </Row>
                     </Modal.Body>
                 </Modal>
-            </div>
+        </div>
         )}
 });
 
-module.exports = msgUser;
+module.exports = MsgUser;

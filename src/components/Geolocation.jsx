@@ -192,7 +192,7 @@ var Geolocation = React.createClass({
         return (
             <div id="viewContent">
                 <GoogleMapLoader
-                    containerElement={<div {...this.props} style={{height: "100vh"}} />}
+                    containerElement={<div {...this.props} style={{height: "75vh"}} />}
                     googleMapElement={
                         <GoogleMap
                             containerProps={{...this.props}}
@@ -279,7 +279,7 @@ var Geolocation = React.createClass({
                     <Modal.Footer>
                         <Col xs={2} xsOffset={10}>
                             <form onSubmit={this.acceptMission}>
-                                <ButtonInput type="submit" value="Apply" disabled={(this.state.clickedMission.createdBy === this.props.user)}/>
+                                <ButtonInput type="submit" value="Apply" disabled={(this.state.clickedMission.createdByUsername === this.props.user.userName)}/>
                             </form>
                         </Col>
                     </Modal.Footer>

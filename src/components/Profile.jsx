@@ -81,7 +81,7 @@ var Profile = React.createClass({
                     <ListGroup>
                         <ListGroupItem><Label>username:</Label> <span id="userInfo">{this.props.user.userName}</span></ListGroupItem>
                         <ListGroupItem><Label bsStyle="info">email:</Label> <span id="userInfo">{this.props.user.email}</span></ListGroupItem>
-                        <ListGroupItem><Label bsStyle="warning">rating:</Label> <span id="userInfo">{this.props.user.ratingScore}</span></ListGroupItem>
+                        <ListGroupItem><Label bsStyle="warning">rating:</Label> <span id="userInfo">{this.props.user.userRating}</span></ListGroupItem>
                     </ListGroup>
                 </Col>
     

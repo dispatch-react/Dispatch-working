@@ -41,9 +41,9 @@ var ShowMissions = React.createClass({
                                     <Panel header={c.title}>
                                         <ListGroup fill>
                                             <ListGroupItem><Label bsStyle="warning">Dispatcher:</Label> <span id="missionInfo">{this.state.dispatcher}</span></ListGroupItem>
-                                            <ListGroupItem><Label bsStyle="info">Brief:</Label> <span id="missionInfo">{c.description}</span></ListGroupItem>
                                             <ListGroupItem><Label bsStyle="danger">Value:</Label> <span id="missionInfo">{c.value}</span></ListGroupItem>
                                         </ListGroup>
+                                            <Label bsStyle="info">Brief:</Label> <span id="missionInfo">{c.description}</span>
                                     </Panel>
                         </Col>
                         <Col xs={4} md={4} mdOffset={0}>
