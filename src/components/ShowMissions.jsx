@@ -69,17 +69,15 @@ var ShowMissions = React.createClass({
     },
     setButtonValueR: function() {this.setState({buttonValue: "Reject"})},
     setButtonValueA: function() {this.setState({buttonValue: "Accept"})},
-    confirmMission: function(missionLink, e) {
+    confirmMission: function(missionLink, activeAgent, e) {
         var nthis = this;
         e.preventDefault();
         var missionObj = (new Parse.Query('Missions').get(missionLink.objectId).then(function(res){
-            console.log(res);
-            res.set('status', 'complete')
+            res.set('status', 'complete');
+            res.set('completedBy', activeAgent);
+            res.set('score', 5);
             res.save();
-            
         }))
-            
-            
     },
     render: function() {
         var self = this;
@@ -97,10 +95,10 @@ var ShowMissions = React.createClass({
                         {this.data.userOwnMissions.map(function(c) {
                         if (c.activeAgent) {
                             var inputRef = c.objectId
-                            var agent = (<ListGroupItem><Label bsStyle="danger">Active Agent:</Label> <span id="missionInfo">{c.activeAgent.userName}</span></ListGroupItem>)
+                            var agent = (<ListGroupItem><Label bsStyle="danger">Active Agent:</Label> <span id="missionInfo">{c.acceptedAgentUsername}</span></ListGroupItem>)
                             var badge = (<Badge pullRight>Active!</Badge>)
                             var confirmButton = (
-                                <form onSubmit={self.confirmMission.bind(self, c)} className="form-horizontal">
+                                <form onSubmit={self.confirmMission.bind(self, c, c.activeAgent)} className="form-horizontal">
                                     <div>
                                         <Col xs={6} xsOffset={2}>
                             <Input type="select" placeholder="Set Score" ref={inputRef} label="Set Score" labelClassName="col-xs-8" wrapperClassName="col-xs-4" className="ratingInput">
