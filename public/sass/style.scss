@@ -44,10 +44,10 @@ img {
   background:  rgba(255,255,255,0.6);
   border-radius: 10px;
     font-size: 14pt;
-    margin-top: 6vh;
-    height: 22vh;
+    margin: 0;
+    height: 115px;
     position: fixed;
-    bottom: -55px;
+    bottom: 0;
     width: 80vw;
     margin-left: 10vw;
     span {
@@ -116,9 +116,6 @@ img {
     min-width: 55px;
 }
 
-.customClass {
-    display: inline;
-}
 
 button > span {
     padding-left: 0.5em;
@@ -129,7 +126,7 @@ button > span {
 }
 
 #msgAuthor {
-    float: right;
+  float: right;
 }
 
 #msgAuthor:hover {
@@ -147,6 +144,7 @@ button > span {
 @media (max-width: 760px){
     .nav {
         font-size: 10pt;
+        margin-bottom: 0.5em;
         >li>a {
             padding: 0;
         }
