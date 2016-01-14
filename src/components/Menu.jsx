@@ -32,19 +32,19 @@ var Menu = React.createClass({
         
         var badge = (<Badge pullRight>{this.data.newMsgs.length}</Badge>);
 
-        
+
         return (
                 <Nav bsStyle="pills" justified onSelect={this.props.onChange}>
-                  <NavItem className="hvr-float navButtons" eventKey={1}><span className="fa fa-user fa-3x"></span>Profile</NavItem>
-                  <NavItem className="hvr-float navButtons" eventKey={2}>{badge}<span className="fa fa-comments fa-3x"></span>Inbox</NavItem>
+                  <NavItem className="hvr-float navButtons" eventKey={1}><span className="navIcons fa fa-user fa-3x"></span><span className="iconText">Profile</span></NavItem>
+                  <NavItem className="hvr-float navButtons" eventKey={2}>{badge}<span className="navIcons fa fa-comments fa-3x"></span><span className="iconText">Inbox</span></NavItem>
                   <NavItem className="hvr-float" eventKey={'home'}>
                   {
                       this.props.location === 'home' ? <CreateMissionForm user={this.props.user}/> :
                       <HomeScreenButton className="hvr-float" />
                   }
                   </NavItem>
-                  <NavItem  className="hvr-float navButtons" eventKey={3}><span className="fa fa-map-marker fa-3x"></span>Missions</NavItem>
-                  <NavItem  className="hvr-float navButtons" eventKey={4}><span className="fa fa-gear fa-3x"></span>Settings</NavItem>
+                  <NavItem  className="hvr-float navButtons" eventKey={3}><span className="navIcons fa fa-map-marker fa-3x"></span><span className="iconText">Missions</span></NavItem>
+                  <NavItem  className="hvr-float navButtons" eventKey={4}><span className="navIcons fa fa-gear fa-3x"></span><span className="iconText">Settings</span></NavItem>
                 </Nav>
         )
     }
