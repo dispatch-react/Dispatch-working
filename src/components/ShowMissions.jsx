@@ -35,17 +35,18 @@ var ShowMissions = React.createClass({
             
             userOwnMissions: (new Parse.Query("Missions")).equalTo("createdBy", this.props.user).notEqualTo('status', 'complete').ascending('createdAt').skip(skip).limit(this.state.limit),
             userActiveMissions: (new Parse.Query("Missions")).equalTo("activeAgent", this.props.user).ascending('createdAt').skip(skip).limit(this.state.limit),
-            userCompletedMissions2: (new Parse.Query("Missions")).equalTo("createdBy", this.props.user).equalTo('status', 'complete').ascending('createdAt').skip(skip).limit(this.state.limit),
+            userCompletedMissions: (new Parse.Query("Missions")).equalTo("createdBy", this.props.user).equalTo('status', 'complete').ascending('createdAt').skip(skip).limit(this.state.limit),
             userOwnMissionsTotal: (new Parse.Query("Missions")).equalTo("createdBy", this.props.user).notEqualTo('status', 'complete').ascending('createdAt'),
             userActiveMissionsTotal: (new Parse.Query("Missions")).equalTo("activeAgent", this.props.user),
-            userCompletedMissionsTotal2: (new Parse.Query("Missions")).equalTo("completedBy", this.props.user).equalTo('status', 'complete').ascending('createdAt')
+            userCompletedMissionsTotal: (new Parse.Query("Missions")).equalTo("completedBy", this.props.user).equalTo('status', 'complete').ascending('createdAt')
         };
     },
     getInitialState(){
         return {
             limit: 5,
             activePage: 1,
-            score: 5
+            score: 5,
+            toggle: true
         }
     },
     setScore: function(e){
@@ -78,16 +79,27 @@ var ShowMissions = React.createClass({
     confirmMission: function(missionLink, activeAgent, e) {
         var nthis = this;
         e.preventDefault();
-
+        var Msg = Parse.Object.extend('Messages');
+        var completeMsg = new Msg();
+            completeMsg.set('content', 'Mission completed! Score: ' + nthis.state.score + '. Well done (' + missionLink.title + ')');
+            completeMsg.set('createdBy', { __type: "Pointer", className: "_User", objectId: this.props.user.objectId });
+            completeMsg.set('writtenTo', { __type: "Pointer", className: "_User", objectId: activeAgent.objectId });
+            completeMsg.set('authorUserName', this.props.user.userName)
+            completeMsg.set('missiongLink', { __type: "Pointer", className: "Missions", objectId: missionLink.objectId })
+            completeMsg.set('type', 'missionComplete');
+            completeMsg.save();
         
         var missionObj = (new Parse.Query('Missions').get(missionLink.objectId).then(function(res){
             res.set('status', 'complete');
             res.set('completedBy', { __type: "Pointer", className: "_User", objectId: activeAgent.objectId });
             res.set('score', nthis.state.score);
-            res.save();
+            res.save().then(function(){
+                nthis.refreshQueries();
+            });
         })
         );
-        this.setState({score: null});
+        alert('Mission marked complete. Thanks for playing')
+
     },
     render: function() {
         var self = this;
