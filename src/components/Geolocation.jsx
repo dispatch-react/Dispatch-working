@@ -62,7 +62,7 @@ var Geolocation = React.createClass({
     mixins: [ParseReact.Mixin, TimerMixin],
     observe: function () {
         return {
-            Missions: new Parse.Query('Missions').equalTo('status', 'open')
+            Missions: new Parse.Query('Missions').equalTo('status', 'open').limit(1000)
         }
     },
     getInitialState(){
@@ -219,7 +219,7 @@ var Geolocation = React.createClass({
                             }
                         >{contents}
                           <MarkerClusterer
-                            minimumClusterSize={2}
+                            minimumClusterSize={5}
                             title={"Click to view missions!"}
                             averageCenter={true}
                             enableRetinaIcons={true}

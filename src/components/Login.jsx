@@ -85,7 +85,8 @@ var Login = React.createClass({
             return (
                 <div>
 
-            <h2>Back to the hustle</h2>
+            <h2 style={{color: "#222", textAlign: "center"}}>Please login</h2>
+                    <br/>
         
          <form className="form-horizontal" onSubmit={this.logIn}>
          
@@ -95,7 +96,7 @@ var Login = React.createClass({
       <span className="input-group-addon"><i className="fa fa-at"></i></span>
       <input type="text" className="form-control" placeholder=" Email" id="formEmail" onChange={this.handleEmailChange}></input>
     </div>
-
+             <br/>
     <div className="input-group">
       <span className="input-group-addon"><i className="fa fa-key"></i></span>
       <input type="text" className="form-control" placeholder=" Password" id="formPw" onChange={this.handlePasswordChange}></input>
