@@ -98,7 +98,7 @@ var Login = React.createClass({
 
     <div className="input-group">
       <span className="input-group-addon"><i className="fa fa-key"></i></span>
-      <input type="text" className="form-control" placeholder=" Password" id="formPw" onChange={this.handlePasswordChange}></input>
+      <input type="password" className="form-control" placeholder=" Password" id="formPw" onChange={this.handlePasswordChange}></input>
     </div>
     
         <br/> {/*BUTTONS TO LOGIN OR GO TO REGISTRATION*/}

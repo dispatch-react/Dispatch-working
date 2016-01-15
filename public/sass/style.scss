@@ -50,6 +50,7 @@ img {
   bottom: 0;
   width: 80vw;
   margin-left: 10vw;
+  z-index: 4;
   span {
     display: block;
   }
@@ -258,5 +259,5 @@ button > span {
 .logOutBtn {
   width: 100%;
   position: absolute;
-  top: 600px;
+  top: 400px;
 }

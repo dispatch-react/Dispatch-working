@@ -77,19 +77,9 @@ var ShowMissions = React.createClass({
     setButtonValueA: function() {this.setState({buttonValue: "Accept"})},
     confirmMission: function(missionLink, activeAgent, e) {
         var nthis = this;
-        
-        
         e.preventDefault();
-        var agent = (new Parse.Query('Users').get("objectId", activeAgent.objectId).then(function(res){
-            res.add('ratings', nthis.state.score);
-            var sum;
-            var totalScores = res.ratings.length;
-            res.ratings.forEach(function(e){
-                sum += Number(e);
-            });
-            res.set('userRating', sum/totalScores);
-            res.save();
-        }));
+
+        
         var missionObj = (new Parse.Query('Missions').get(missionLink.objectId).then(function(res){
             res.set('status', 'complete');
             res.set('completedBy', { __type: "Pointer", className: "_User", objectId: activeAgent.objectId });
@@ -97,8 +87,7 @@ var ShowMissions = React.createClass({
             res.save();
         })
         );
-        
-        this.setState();
+        this.setState({score: null});
     },
     render: function() {
         var self = this;

@@ -15,7 +15,34 @@ var ListGroup = require('react-bootstrap').ListGroup;
 var ListGroupItem = require('react-bootstrap').ListGroupItem;
 
 var Profile = React.createClass({
+    componentWillMount: function() {
+        var self = this;
+        var res = new Parse.Query("Missions")
+            res.equalTo('completedBy', this.props.user);
+            res.find({
+                success: function(results){
+                    var scoreTotal = 0;
+                    var finalScore = 0;
+                    results.forEach(function(mission){
+                        
+                        var number = mission.get('score')
+                        
+                        if (!isNaN(number)){
+                            console.log(number)
+                        scoreTotal += number;
+                            }
+                        })
 
+                    finalScore = scoreTotal/results.length
+
+                    self.setState({userRating: finalScore})
+
+            },
+                error: function(error){
+                    console.log(error)
+                }
+            })
+    },
     getInitialState: function() {
         return {
             showButton: true
@@ -81,7 +108,7 @@ var Profile = React.createClass({
                     <ListGroup>
                         <ListGroupItem><Label>username:</Label> <span id="userInfo">{this.props.user.userName}</span></ListGroupItem>
                         <ListGroupItem><Label bsStyle="info">email:</Label> <span id="userInfo">{this.props.user.email}</span></ListGroupItem>
-                        <ListGroupItem><Label bsStyle="warning">rating:</Label> <span id="userInfo">{this.props.user.userRating}</span></ListGroupItem>
+                        <ListGroupItem><Label bsStyle="warning">rating:</Label> <span id="userInfo">{this.state.userRating}</span></ListGroupItem>
                     </ListGroup>
                 </Col>
     
