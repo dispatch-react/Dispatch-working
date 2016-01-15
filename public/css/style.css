@@ -5,10 +5,34 @@ html, body {
 #app {
   height: 100%; }
 
+@-webkit-keyframes blackWhite {
+  0% {
+    background: url("../img/loading.gif") no-repeat;
+    background-size: cover; }
+  100% {
+    background-color: black; } }
+@-webkit-keyframes blackWhiteFade {
+  0% {
+    background-color: white; }
+  50% {
+    background-color: black; }
+  100% {
+    background-color: white; } }
+#loadingScreen {
+  height: 100vh;
+  width: 100vw;
+  background-color: black;
+  -webkit-animation-name: blackWhite;
+  /* -webkit-animation-name: blackWhiteFade; */
+  -webkit-animation-duration: 23s; }
+
 .loginScreen {
-  background: url("../img/login.jpg") no-repeat center center fixed;
+  background: url("../img/backgroundLogIn.jpg") no-repeat center center fixed;
   background-size: cover;
   height: 100%;
+  width: 100%; }
+
+input {
   width: 100%; }
 
 #viewContent {

@@ -5,13 +5,51 @@ html, body {
 #app {
   height: 100%;
 }
+//#loadingScreen {
+//  background: #222;
+//  width: 100vw;
+//  height: 100vh;
+//}
+//
+//#loadingScreen {
+//  background: yellow;
+//  transition: background-color 10000ms linear;
+//}
+
+@-webkit-keyframes blackWhite {
+  0% { background: url("../img/loading.gif") no-repeat;
+        background-size: cover;
+    }
+
+  100% { background-color: black; }
+}
+
+@-webkit-keyframes blackWhiteFade {
+  0% { background-color: white; }
+  50% { background-color: black; }
+  100% { background-color: white; }
+}
+
+#loadingScreen {
+  height: 100vh;
+  width: 100vw;
+  background-color: black;
+  -webkit-animation-name: blackWhite;
+  /* -webkit-animation-name: blackWhiteFade; */
+  -webkit-animation-duration: 23s;
+}
+
 .loginScreen{
-  background: url('../img/login.jpg') no-repeat center center fixed;
+  background: url('../img/backgroundLogIn.jpg') no-repeat center center fixed;
   background-size: cover;
   height: 100%;
   width: 100%;
 }
 $nav-clr: #160A20;
+
+input {
+  width: 100%;
+}
 
 #viewContent {
   height: 100vh;

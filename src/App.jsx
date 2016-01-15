@@ -63,7 +63,7 @@ var App = React.createClass({
             return (
         <Grid className="loginScreen">
             <Row>
-                <Col xs={6} xsOffset={3}>
+                <Col xs={9} xsOffset={2} sm={6} smOffset={3} md={5} mdOffset={4}>
                     <Well id="appView" className="loginPage">
                              <Login onChange={this.navChanged} />
                     </Well>
