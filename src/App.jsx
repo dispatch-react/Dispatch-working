@@ -17,6 +17,7 @@ var Row = require('react-bootstrap').Row;
 var Col = require('react-bootstrap').Col;
 var Well = require('react-bootstrap').Well;
 var Navbar = require('react-bootstrap').Navbar;
+var FullScreen = require('react-fullscreen');
 require("./components/OverlayCluster.jsx");
 
 var App = React.createClass({
@@ -55,25 +56,27 @@ var App = React.createClass({
                     }
                         <Menu onChange={this.navChanged} location={this.state.location} user={this.data.user}/>
         </div>
+
             );
         }
         else {
             return (
-        <Grid>
+        <Grid className="loginScreen">
             <Row>
-                <Col xs={8} xsOffset={2}>  
+                <Col xs={6} xsOffset={3}>
                     <Well id="appView" className="loginPage">
                              <Login onChange={this.navChanged} />
                     </Well>
                 </Col>
             </Row>
-        </Grid>)
+        </Grid>
+           )
         }
     }
 });
 
 
 
-ReactDOM.render(<App />, document.getElementById('app'));
+ReactDOM.render(<App style={{minHeight: "100%"}} />, document.getElementById('app'));
     
     
