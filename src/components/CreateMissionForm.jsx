@@ -172,7 +172,7 @@ var CreateMissionForm = React.createClass({
             <Col xs={2}>
                 <ButtonInput type="reset" value="Reset"/>
             </Col>
-            <Col xs={2} xsOffset={7}>    
+            <Col xs={3} xsOffset={7}>    
                 <ButtonInput bsStyle="success" type="submit" value="Dispatch!" />
             </Col>
           </Modal.Footer>

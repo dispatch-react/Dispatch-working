@@ -85,7 +85,8 @@ var Login = React.createClass({
             return (
                 <div>
 
-            <h2 style={{color: "#222", textAlign: "center"}}>Please login</h2>
+            <h2 style={{color: "#222", textAlign: "center"}}>Dispatchr</h2>
+            <p style={{color: "#222", textAlign: "center"}}>WelcomeBack</p>
                     <br/>
         
          <form className="form-horizontal" onSubmit={this.logIn}>
@@ -125,7 +126,7 @@ var Login = React.createClass({
 
             return (<div>
 
-      <h2>Ready to make some gwap motherfucker!?!</h2>
+      <h2>Get Busy!</h2>
         
       <form onSubmit={this.signUp} className="form-horizontal">
          

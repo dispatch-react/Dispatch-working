@@ -105,7 +105,7 @@ var Geolocation = React.createClass({
             () => {
                 this.refreshQueries();
             },
-            5000
+            15000
         );
         geolocation.getCurrentPosition((position) => {
             this.setState({
@@ -222,7 +222,7 @@ var Geolocation = React.createClass({
                          <div id="loadingScreen"></div>
                         {contents}
                           <MarkerClusterer
-                            minimumClusterSize={5}
+                            minimumClusterSize={3}
                             title={"Click to view missions!"}
                             averageCenter={true}
                             enableRetinaIcons={true}

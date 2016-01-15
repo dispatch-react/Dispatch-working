@@ -169,10 +169,10 @@ var Inbox = React.createClass({
                                     if (c.type === "missionAccepted") {
                                         Buttons = (
                                             <form onSubmit={self.acceptApplicant.bind(self, c.createdBy, c.authorUserName, c.missionLink, c)}>
-                                                <Col xs={1}><ButtonInput bsStyle="danger" type="submit"
+                                                <Col xs={2}><ButtonInput bsStyle="danger" type="submit"
                                                                          onClick={self.setButtonValueR}
                                                                          value="Reject"/></Col>
-                                                <Col xs={1}><ButtonInput bsStyle="success" type="submit"
+                                                <Col xs={2}><ButtonInput bsStyle="success" type="submit"
                                                                          onClick={self.setButtonValueA}
                                                                          value="Accept"/></Col>
                                             </form>
@@ -190,7 +190,7 @@ var Inbox = React.createClass({
                                                             <Label bsStyle="info" id="msgAuthor"
                                                                    onClick={self.setRecipientMissionReply.bind(self, c.createdBy, c.authorUserName, c.missionLink, c)}>{c.authorUserName}</Label>
                                                         </Col>
-                                                        <Col xs={7}>
+                                                        <Col xs={6}>
                                                             <span id="msgInfo">{c.content}</span>
                                                         </Col>
                                                         {Buttons}

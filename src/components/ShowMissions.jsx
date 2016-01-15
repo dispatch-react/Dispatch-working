@@ -34,10 +34,10 @@ var ShowMissions = React.createClass({
             userCompletedMissionsTotal: Parse.Query.or(myCompleted, iCompleted),
             
             userOwnMissions: (new Parse.Query("Missions")).equalTo("createdBy", this.props.user).notEqualTo('status', 'complete').ascending('createdAt').skip(skip).limit(this.state.limit),
-            userActiveMissions: (new Parse.Query("Missions")).equalTo("activeAgent", this.props.user).ascending('createdAt').skip(skip).limit(this.state.limit),
+            userActiveMissions: (new Parse.Query("Missions")).equalTo("activeAgent", this.props.user).notEqualTo('status', 'complete').ascending('createdAt').skip(skip).limit(this.state.limit),
             userCompletedMissions: (new Parse.Query("Missions")).equalTo("createdBy", this.props.user).equalTo('status', 'complete').ascending('createdAt').skip(skip).limit(this.state.limit),
             userOwnMissionsTotal: (new Parse.Query("Missions")).equalTo("createdBy", this.props.user).notEqualTo('status', 'complete').ascending('createdAt'),
-            userActiveMissionsTotal: (new Parse.Query("Missions")).equalTo("activeAgent", this.props.user),
+            userActiveMissionsTotal: (new Parse.Query("Missions")).equalTo("activeAgent", this.props.user).notEqualTo('status', 'complete'),
             userCompletedMissionsTotal: (new Parse.Query("Missions")).equalTo("completedBy", this.props.user).equalTo('status', 'complete').ascending('createdAt')
         };
     },
