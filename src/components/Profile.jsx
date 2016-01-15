@@ -115,7 +115,9 @@ var Profile = React.createClass({
                 <Col xs={4} xsOffset={4} md={4} mdOffset={0}>
                              {profilePic}
                     <div>
+                    <Col xs={4} xsOffset={2} md={4} mdOffset={4}>
                              {imgUpdater}
+                    </Col>
                     </div>
                     
                 </Col>  

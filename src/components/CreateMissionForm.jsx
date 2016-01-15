@@ -95,7 +95,7 @@ var CreateMissionForm = React.createClass({
 
             // ...and execute it
             creator.dispatch().then(function(res){
-                console.log("res")
+                
             },
             function(error){
                 alert('there was an error, check your self')
@@ -110,7 +110,6 @@ var CreateMissionForm = React.createClass({
                 
             }
             else {
-                console.log('found attachment')
                 var file = fileUpload[0];
                 att = new Parse.File("attach", file);
                 att.save().then(function(){
@@ -169,10 +168,10 @@ var CreateMissionForm = React.createClass({
     
             </Modal.Body>
           <Modal.Footer>
-            <Col xs={2}>
+            <Col xs={4} md={2}>
                 <ButtonInput type="reset" value="Reset"/>
             </Col>
-            <Col xs={3} xsOffset={7}>    
+            <Col xs={4} xsOffset={4} md={2} mdOffset={8}>    
                 <ButtonInput bsStyle="success" type="submit" value="Dispatch!" />
             </Col>
           </Modal.Footer>

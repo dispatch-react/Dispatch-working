@@ -69,7 +69,6 @@ var Login = React.createClass({
             success: function(user) {
                 self.props.onChange('home')
                 // Hooray! Let them use the app now.
-                alert('you have signed up succesfully');
             },
             error: function(user, error) {
                 // Show the error message somewhere and let the user try again.
@@ -86,7 +85,7 @@ var Login = React.createClass({
                 <div>
 
             <h2 style={{color: "#222", textAlign: "center"}}>Dispatchr</h2>
-            <p style={{color: "#222", textAlign: "center"}}>WelcomeBack</p>
+            <p style={{color: "#222", textAlign: "center"}}>Welcome Back</p>
                     <br/>
         
          <form className="form-horizontal" onSubmit={this.logIn}>
@@ -126,7 +125,7 @@ var Login = React.createClass({
 
             return (<div>
 
-      <h2>Get Busy!</h2>
+      <h1 style={{color: "#222", textAlign: "center"}}>Get Busy!</h1>
         
       <form onSubmit={this.signUp} className="form-horizontal">
          
