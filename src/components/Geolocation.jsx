@@ -105,7 +105,7 @@ var Geolocation = React.createClass({
             () => {
                 this.refreshQueries();
             },
-            15000
+            5000
         );
         geolocation.getCurrentPosition((position) => {
             this.setState({
