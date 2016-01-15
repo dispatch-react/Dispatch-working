@@ -22,6 +22,7 @@ var Modal = require('react-bootstrap').Modal;
 var ButtonInput = require('react-bootstrap').ButtonInput;
 var Col = require('react-bootstrap').Col;
 var Alert = require('react-bootstrap').Alert;
+var Image = require('react-bootstrap').Image
 
 var inputStyle = {
     "border": "1px solid transparent",
@@ -104,7 +105,7 @@ var Geolocation = React.createClass({
             () => {
                 this.refreshQueries();
             },
-            15000
+            5000
         );
         geolocation.getCurrentPosition((position) => {
             this.setState({
@@ -217,7 +218,9 @@ var Geolocation = React.createClass({
                             center={
                                 center ? center: userPosition
                             }
-                        >{contents}
+                        >
+                         <div id="loadingScreen"></div>
+                        {contents}
                           <MarkerClusterer
                             minimumClusterSize={5}
                             title={"Click to view missions!"}

@@ -25,7 +25,7 @@ var Menu = React.createClass({
             () => {
                 this.refreshQueries();
             },
-            15000
+            5000
         )
     },
     render: function() {
