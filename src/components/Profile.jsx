@@ -112,7 +112,7 @@ var Profile = React.createClass({
                     </ListGroup>
                 </Col>
     
-                <Col xs={4} xsOffset={4} md={4} mdOffset={0}>
+                <Col xs={4} xsOffset={2} md={4} mdOffset={4}>
                              {profilePic}
                     <div>
                     <Col xs={4} xsOffset={2} md={4} mdOffset={4}>
@@ -127,7 +127,6 @@ var Profile = React.createClass({
         )
     }
 });
-
 
 
 module.exports = Profile;

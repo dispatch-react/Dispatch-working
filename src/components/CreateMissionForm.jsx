@@ -27,8 +27,8 @@ var CreateMissionForm = React.createClass({
                 description: '',
                 carReq: false,
                 remote: false,
-                category: 'construction, trades',
-                type: ''
+                category: 'other',
+                locationDefined: false
             };
         },
 
@@ -65,7 +65,8 @@ var CreateMissionForm = React.createClass({
         handleStartLocationChange: function(e) {
             this.setState({
                 lat: e.latitude,
-                lng: e.longitude
+                lng: e.longitude,
+                locationDefined: true
             })
         },
         handleFormSubmit: function(e) {
@@ -95,7 +96,7 @@ var CreateMissionForm = React.createClass({
 
             // ...and execute it
             creator.dispatch().then(function(res){
-                
+                self.setState({loc: ''});
             },
             function(error){
                 alert('there was an error, check your self')
@@ -144,9 +145,9 @@ var CreateMissionForm = React.createClass({
           <Modal.Body>
             
               
-    <Input type="text" placeholder="Mission Title" onChange={this.handleTitleChange} />
-    <Input type="textarea" label="Mission description" onChange={this.handleDescriptionChange}/>
-    <Input type="text" onChange={this.handleValueChange} addonBefore="Set Bounty" addonAfter="$" />
+    <Input type="text" placeholder="Mission Title" onChange={this.handleTitleChange} required/>
+    <Input type="textarea" label="Mission description" onChange={this.handleDescriptionChange} required/>
+    <Input type="text" onChange={this.handleValueChange} addonBefore="Set Bounty" addonAfter="$" required/>
     <Autocomplete setLocation={this.handleStartLocationChange} className="autocomplete"/>
     
     <Input type="select" label="Category" labelClassName="col-xs-2" wrapperClassName="col-xs-5" onChange={this.handleCategoryChange}>

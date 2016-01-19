@@ -16,7 +16,6 @@ var Autocomplete = React.createClass({
         
         google.maps.event.addListener(autocomplete, 'place_changed', () => {
             var place = autocomplete.getPlace();
-            // document.getElementById('city2').value = place.name;
             var lat = place.geometry.location.lat()
             var lng = place.geometry.location.lng()
              
@@ -31,11 +30,18 @@ var Autocomplete = React.createClass({
         this.setState({
             location: e.target.value
         })
-    },
+     },
+     keyPressed(e){
+         console.log(e)
+         if (e.keyCode === 13){
+         e.preventDefault();
+         }
+     },
+     
      render: function() {
        return (
            <div>
-               <input className="autocomplete" ref='searchField' type="text" size="50" required onChange={this.handleChange} placeholder="Enter a Location"/>
+               <input onKeyDown={this.keyPressed} className="autocomplete" ref="searchField" type="text" size="50" required onChange={this.handleChange} placeholder="Enter a Location"/>
            </div>
            );
    }
