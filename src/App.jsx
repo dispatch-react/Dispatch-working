@@ -18,7 +18,7 @@ var Col = require('react-bootstrap').Col;
 var Well = require('react-bootstrap').Well;
 var Navbar = require('react-bootstrap').Navbar;
 var FullScreen = require('react-fullscreen');
-require("./components/OverlayCluster.jsx");
+require('./components/OverlayCluster.jsx');
 
 var App = React.createClass({
     

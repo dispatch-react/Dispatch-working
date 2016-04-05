@@ -22,7 +22,8 @@ var Modal = require('react-bootstrap').Modal;
 var ButtonInput = require('react-bootstrap').ButtonInput;
 var Col = require('react-bootstrap').Col;
 var Alert = require('react-bootstrap').Alert;
-var Image = require('react-bootstrap').Image
+var Image = require('react-bootstrap').Image;
+var Media = require('react-bootstrap').Media;
 
 var inputStyle = {
     "border": "1px solid transparent",
@@ -107,27 +108,47 @@ var Geolocation = React.createClass({
             },
             15000
         );
-        geolocation.getCurrentPosition((position) => {
-            this.setState({
-                userPosition: {
-                    lat: position.coords.latitude,
-                    lng: position.coords.longitude
-                },
-            });
-        }, (reason) => {
+        
+        if (this.props.user.userName === 'demoUser') {
             this.setState({
                 center: {
                     lat: 45.5017,
                     lng: -73.5673
                 },
-                content: `Error: The Geolocation service failed (${ reason }).`
-            })
-        })
+                showDemo: true
+            });
+        }
+        
+        else {
+        
+            geolocation.getCurrentPosition((position) => {
+                
+                this.setState({
+                    userPosition: {
+                        lat: position.coords.latitude,
+                        lng: position.coords.longitude
+                    },
+                });
+            }, (reason) => {
+                this.setState({
+                    center: {
+                        lat: 45.5017,
+                        lng: -73.5673
+                    },
+                    content: `Error: The Geolocation service failed (${ reason }).`
+                });
+            });
+        }
     },
     close() {
         this.setState({
             showModal: false
         });
+    },
+    dismissDemo() {
+        this.setState({
+            showDemo: false
+        })
     },
     open(marker) {
         this.setState({
@@ -302,6 +323,55 @@ var Geolocation = React.createClass({
                             <form onSubmit={this.acceptMission}>
                                 <ButtonInput type="submit" value="Apply" disabled={(this.state.clickedMission.createdByUsername === this.props.user.userName)}/>
                             </form>
+                        </Col>
+                    </Modal.Footer>
+                </Modal>
+                
+                
+                <Modal show={this.state.showDemo} onHide={this.dismissDemo} backdrop="static">
+                    <Modal.Header closeButton>
+                        <Modal.Title>Thanks for trying Dispatchr!</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                         <Media>
+                             <Media.Left>
+                                <img width={64} height={64} src="../img/dispathr-clear-bg-logo.png" alt="Dispatchr Logo"/>
+                              </Media.Left>
+                              <Media.Body>
+                                <Media.Heading>It all starts here</Media.Heading>
+                                <p>Use the Dispatchr button (pictured at left) at the bottom of your screen to create a mission</p>
+                              </Media.Body>
+                        </Media>
+                        
+                        <Media>
+                             <Media.Left>
+                                <img width={64} height={64} src="https://www.dropbox.com/s/e12js971ie5bifq/domestic-food-delivery.png?dl=1" alt="Food Mission Icon"/>
+                              </Media.Left>
+                              <Media.Body>
+                                <Media.Heading>Get started on a mission</Media.Heading>
+                                <p>The map displays missions created by users, click the icon to get details and apply!</p>
+                                <p>If you're application is accepted, you'll get a message in your inbox and the mission will be active</p>
+                              </Media.Body>
+                        </Media>
+                        <Media>
+                             <Media.Left>
+                                <img width={64} height={64} src="https://www.clker.com/cliparts/T/Y/8/C/N/L/gear-icon-th.png" alt="Settings Icon"/>
+                              </Media.Left>
+                              <Media.Body>
+                                <Media.Heading>Ready to join the fun and make some cash?!</Media.Heading>
+                                <p>Head to Settings in the main Nav menu and hit LogOut if you want to go back and create your own account</p>
+                                <p>Please note that Dispatchr is a demo application showcasing our knowledge of React.JS & GoogleMaps!</p>
+                                <p>Thanks for checking it out</p>
+                                <p>PS: this app was built by <a href="github.com/dcodus" target="_blank">Codrin</a> and <a href="github.com/aplhanumeric0101" target="_blank">Alex</a></p>
+                              </Media.Body>
+                        </Media>
+                        
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Col xs={4} xsOffset={4}>
+
+                            <ButtonInput value="Roger that" onClick={this.dismissDemo} />
+                            
                         </Col>
                     </Modal.Footer>
                 </Modal>

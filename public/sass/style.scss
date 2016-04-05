@@ -314,7 +314,9 @@ button > span {
 
 }
 .logOutBtn {
-  width: 100%;
+  width: 100px;
+  margin: auto;
+  display: block;
   position: absolute;
-  top: 400px;
+  top: 200px;
 }

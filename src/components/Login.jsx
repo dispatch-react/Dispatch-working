@@ -47,11 +47,21 @@ var Login = React.createClass({
         var self = this;
         e.preventDefault();
         Parse.User.logIn(this.state.email, this.state.password).then(function(user) {
-            //alert('welcome back!'); //ALERT will mess with the loading animation
             self.props.onChange('home')
         }, function(user, error) {
             alert('bad login, check your inputs');
         });
+    },
+    
+    startDemo: function(e) {
+        var self = this;
+        e.preventDefault();
+        Parse.User.logIn('demouser@mail.com', 'password').then(function(user) {
+            self.props.onChange('home')
+        }, function(user, error) {
+            alert('demo session failed')
+        })
+        
     },
 
     /* SignUp Function */
@@ -102,7 +112,7 @@ var Login = React.createClass({
       <input type="password" className="form-control" placeholder=" Password" id="formPw" onChange={this.handlePasswordChange}></input>
     </div>
     
-        <br/> {/*BUTTONS TO LOGIN OR GO TO REGISTRATION*/}
+        <br/> {/*BUTTONS TO LOGIN OR GO TO REGISTRATION + Button to Demo the App*/}
 
   <div>
     
@@ -114,6 +124,13 @@ var Login = React.createClass({
     Create
     <span className="fa fa-user-plus"></span>
     </Button>
+    
+        
+    <Button bsStyle="warning" bsSize="large" block onClick={this.startDemo}>
+    View Demo
+    <span className="fa fa-taxi"></span>
+    </Button>
+    
   </div>
 
       </form>
