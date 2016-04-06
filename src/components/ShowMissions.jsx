@@ -9,12 +9,9 @@ var Label = require('react-bootstrap').Label;
 var Badge = require('react-bootstrap').Badge;
 var Input = require('react-bootstrap').Input;
 var ListGroup = require('react-bootstrap').ListGroup;
-var ButtonGroup = require('react-bootstrap').ButtonGroup;
 var Button = require('react-bootstrap').Button;
 var ListGroupItem = require('react-bootstrap').ListGroupItem;
 var Pagination = require('react-bootstrap').Pagination;
-var Pager = require('react-bootstrap').Pager;
-var PageItem = require('react-bootstrap').PageItem;
 
 var MsgUser = require('./MsgUser.jsx');
 

@@ -214,7 +214,7 @@ var Geolocation = React.createClass({
             ])
         }
         return (
-            <div id="viewContent">
+            <div id="mapViewContent">
                 <GoogleMapLoader
                     containerElement={<div {...this.props} style={{height: "100vh"}} />}
                     googleMapElement={
@@ -313,9 +313,7 @@ var Geolocation = React.createClass({
                     </Modal.Header>
                     <Modal.Body>
 
-
                         {<ClickedMission marker={this.state.clickedMission}/>}
-
 
                     </Modal.Body>
                     <Modal.Footer>
@@ -332,46 +330,35 @@ var Geolocation = React.createClass({
                     <Modal.Header closeButton>
                         <Modal.Title>Thanks for trying Dispatchr!</Modal.Title>
                     </Modal.Header>
-                    <Modal.Body>
+                    <Modal.Body id="demoModal">
                          <Media>
                              <Media.Left>
-                                <img width={64} height={64} src="../img/dispathr-clear-bg-logo.png" alt="Dispatchr Logo"/>
+                                <img height={64} width={64} src="img/dispatchr-clear-bg-logo.png" alt="Dispatchr Logo"/>
                               </Media.Left>
                               <Media.Body>
-                                <Media.Heading>It all starts here</Media.Heading>
-                                <p>Use the Dispatchr button (pictured at left) at the bottom of your screen to create a mission</p>
+                                <p>Use the Dispatchr button at the bottom of your screen to create a new mission.</p>
                               </Media.Body>
                         </Media>
                         
                         <Media>
-                             <Media.Left>
-                                <img width={64} height={64} src="https://www.dropbox.com/s/e12js971ie5bifq/domestic-food-delivery.png?dl=1" alt="Food Mission Icon"/>
-                              </Media.Left>
                               <Media.Body>
-                                <Media.Heading>Get started on a mission</Media.Heading>
-                                <p>The map displays missions created by users, click the icon to get details and apply!</p>
-                                <p>If you're application is accepted, you'll get a message in your inbox and the mission will be active</p>
+                                <p>The map displays missions created by users, click the icon to get details and apply.</p>
                               </Media.Body>
+                              <Media.Right>
+                                <img width={32} height={32} src="https://www.dropbox.com/s/e12js971ie5bifq/domestic-food-delivery.png?dl=1" alt="Food Mission Icon"/>
+                              </Media.Right>
                         </Media>
                         <Media>
-                             <Media.Left>
-                                <img width={64} height={64} src="https://www.clker.com/cliparts/T/Y/8/C/N/L/gear-icon-th.png" alt="Settings Icon"/>
-                              </Media.Left>
                               <Media.Body>
-                                <Media.Heading>Ready to join the fun and make some cash?!</Media.Heading>
-                                <p>Head to Settings in the main Nav menu and hit LogOut if you want to go back and create your own account</p>
-                                <p>Please note that Dispatchr is a demo application showcasing our knowledge of React.JS & GoogleMaps!</p>
-                                <p>Thanks for checking it out</p>
-                                <p>PS: this app was built by <a href="github.com/dcodus" target="_blank">Codrin</a> and <a href="github.com/aplhanumeric0101" target="_blank">Alex</a></p>
+                                <p>Dispatchr is a demo application showcasing our knowledge of React.JS & GoogleMaps!</p>
+                                <p>This app was built by <a href="github.com/dcodus" target="_blank">Codrin</a> and <a href="github.com/aplhanumeric0101" target="_blank">Alex</a> while at <a href="decodemtl.com" target="_blank">DecodeMTL</a></p>
                               </Media.Body>
                         </Media>
                         
                     </Modal.Body>
                     <Modal.Footer>
                         <Col xs={4} xsOffset={4}>
-
                             <ButtonInput value="Roger that" onClick={this.dismissDemo} />
-                            
                         </Col>
                     </Modal.Footer>
                 </Modal>
@@ -379,7 +366,6 @@ var Geolocation = React.createClass({
         )
     }
 });
-
 
 module.exports = Geolocation;
 

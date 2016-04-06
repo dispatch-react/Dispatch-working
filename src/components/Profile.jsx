@@ -5,11 +5,9 @@ var ParseReact = require('parse-react');
 var Button = require('react-bootstrap').Button;
 var Image = require('react-bootstrap').Image;
 var Panel = require('react-bootstrap').Panel;
-var Grid = require('react-bootstrap').Grid;
 var Row = require('react-bootstrap').Row;
 var Col = require('react-bootstrap').Col;
 var Input = require('react-bootstrap').Input;
-var FormControls = require('react-bootstrap').FormControls;
 var Label = require('react-bootstrap').Label;
 var ListGroup = require('react-bootstrap').ListGroup;
 var ListGroupItem = require('react-bootstrap').ListGroupItem;
@@ -17,7 +15,7 @@ var ListGroupItem = require('react-bootstrap').ListGroupItem;
 var Profile = React.createClass({
     componentWillMount: function() {
         var self = this;
-        var res = new Parse.Query("Missions")
+        var res = new Parse.Query("Missions");
             res.equalTo('completedBy', this.props.user);
             res.find({
                 success: function(results){
@@ -25,27 +23,31 @@ var Profile = React.createClass({
                     var finalScore = 0;
                     results.forEach(function(mission){
                         
-                        var number = mission.get('score')
+                        var number = mission.get('score');
                         
                         if (!isNaN(number)){
-                            console.log(number)
                         scoreTotal += number;
                             }
-                        })
+                        });
 
-                    finalScore = scoreTotal/results.length
+                    finalScore = scoreTotal/results.length;
 
-                    self.setState({userRating: finalScore})
-
+                    if (self.props.user.userName === 'demoUser') {
+                        self.setState({userRating: 4});
+                    }
+                    else {
+                    self.setState({userRating: finalScore});
+                    }
             },
                 error: function(error){
-                    console.log(error)
+                    console.log(error);
                 }
-            })
+            });
     },
     getInitialState: function() {
         return {
-            showButton: true
+            showButton: true,
+            userRating: 0
         }
     },
     toggleImgUpload: function() {
@@ -82,7 +84,7 @@ var Profile = React.createClass({
     },
 
     render: function() {
-        var title = (<h1>Profile</h1>)
+        var title = (<h1>Profile</h1>);
         var imgUpdater;
         if (this.state.showButton) {
             imgUpdater = <Button bsStyle="default" id="updatePhoto" onClick={this.toggleImgUpload} type="button">Update Photo</Button>
@@ -112,10 +114,10 @@ var Profile = React.createClass({
                     </ListGroup>
                 </Col>
     
-                <Col xs={4} xsOffset={2} md={4} mdOffset={4}>
+                <Col xs={4} xsOffset={4} md={4} mdOffset={0}>
                              {profilePic}
                     <div>
-                    <Col xs={4} xsOffset={2} md={4} mdOffset={4}>
+                    <Col xs={4} xsOffset={3}>
                              {imgUpdater}
                     </Col>
                     </div>
