@@ -1,0 +1,252 @@
+html, body {
+  height: 100%;
+  min-height: 100%; }
+
+#app {
+  height: 100%; }
+
+@-webkit-keyframes blackWhite {
+  0% {
+    background: url("../img/loading.gif") no-repeat center fixed;
+    background-size: cover; }
+  100% {
+    background-color: black; } }
+@-webkit-keyframes blackWhiteFade {
+  0% {
+    background-color: white; }
+  50% {
+    background-color: black; }
+  100% {
+    background-color: white; } }
+#loadingScreen {
+  height: 100vh;
+  width: 100vw;
+  background-color: black;
+  -webkit-animation-name: blackWhite;
+  /* -webkit-animation-name: blackWhiteFade; */
+  -webkit-animation-duration: 23s; }
+
+.loginScreen {
+  background: url("../img/backgroundLogIn.jpg") no-repeat center center fixed;
+  background-size: cover;
+  height: 100%;
+  width: 100%; }
+
+input {
+  width: 100%; }
+
+#viewContent, #mapViewContent {
+  height: 100vh;
+  overflow: auto; }
+
+body {
+  font-size: 14pt;
+  font-family: Helvetica, sans-serif; }
+
+h1 .panelTitle > a {
+  padding-right: 80vw; }
+
+a {
+  color: #160A20; }
+
+img {
+  max-width: 100%; }
+
+#demoModal img {
+  max-width: 1000px; }
+
+#nav-icon {
+  min-width: 70px;
+  max-width: 100px;
+  -webkit-filter: saturate(0) contrast(200%); }
+
+#userInfo {
+  float: right; }
+
+#missionInfo {
+  float: right; }
+
+#updatePhoto {
+  text-align: center;
+  padding: 5px; }
+
+.nav {
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: 10px;
+  font-size: 14pt;
+  margin-top: 6vh;
+  height: 115px;
+  position: fixed;
+  bottom: 0;
+  width: 80vw;
+  margin-left: 10vw;
+  z-index: 4; }
+  .nav span {
+    display: block; }
+  .nav > li > a:focus, .nav > li > a:hover {
+    background-color: transparent; }
+  .nav > li:first-child {
+    margin-left: 10px; }
+  .nav .navIcons {
+    color: #222; }
+  .nav .iconText {
+    background: rgba(244, 244, 244, 0.9);
+    border-radius: 10px;
+    margin-top: 9px; }
+  .nav .badge {
+    background: red;
+    text-shadow: none;
+    position: absolute;
+    right: 35px; }
+
+/* Float */
+.hvr-float {
+  display: inline-block;
+  vertical-align: middle;
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+  box-shadow: 0 0 1px transparent;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-transition-duration: 0.3s;
+  transition-duration: 0.3s;
+  -webkit-transition-property: transform;
+  transition-property: transform;
+  -webkit-transition-timing-function: ease-out;
+  transition-timing-function: ease-out; }
+
+.hvr-float:hover, .hvr-float:focus, .hvr-float:active {
+  -webkit-transform: translateY(-8px);
+  transform: translateY(-8px); }
+
+.well {
+  margin-top: 0.1vh;
+  padding: 0;
+  padding-top: 0.9vh;
+  margin-bottom: 0; }
+  .well > div {
+    padding: 0 1em 1em 1em; }
+
+.loginPage {
+  margin-top: 20vh;
+  background: transparent;
+  border: none; }
+
+.ratingInput {
+  min-width: 55px; }
+
+button > span {
+  padding-left: 0.5em; }
+
+#msgInfo {
+  margin-left: 5px; }
+
+#msgAuthor {
+  float: right; }
+
+#msgAuthor {
+  float: right; }
+
+#msgAuthor:hover {
+  cursor: pointer; }
+
+#recipient {
+  margin-bottom: 8px; }
+
+.autocomplete {
+  margin: 1em 5px 1em 0; }
+
+@media (max-width: 760px) {
+  .nav {
+    font-size: 10pt; }
+    .nav > li > a {
+      padding: 0; }
+
+  #nav-icon {
+    min-width: 20px;
+    max-width: 60px;
+    padding-bottom: 20px; } }
+@media (min-width: 0px) {
+  .nav-justified > li {
+    display: table-cell;
+    width: 1%; } }
+@media (max-width: 360px) {
+  .nav {
+    font-size: 10pt; }
+    .nav > li > a {
+      padding: 0; }
+
+  #nav-icon {
+    min-width: 20px;
+    max-width: 50px;
+    padding-bottom: 10px; } }
+@media (min-width: 0px) {
+  .nav-justified > li {
+    display: table-cell;
+    width: 1%; } }
+@media (min-width: 320px) {
+  .nav {
+    padding-top: 1em;
+    width: 100vw;
+    margin-left: 0; }
+    .nav .badge {
+      position: absolute;
+      right: -12px;
+      top: -4px; } }
+@media (min-width: 480px) {
+  .nav .badge {
+    position: absolute;
+    right: -5px; } }
+@media (min-width: 680px) {
+  .nav .badge {
+    position: absolute;
+    right: 5px; } }
+@media (min-width: 760px) {
+  .nav {
+    padding-top: 0; }
+    .nav .badge {
+      position: absolute;
+      right: 35px;
+      top: 5px; }
+
+  #viewContent {
+    margin: 5vh 15vw 0 15vw; } }
+@media (min-width: 980px) {
+  .nav .badge {
+    position: absolute;
+    right: 35px;
+    top: 5px; } }
+.pac-container {
+  z-index: 999999; }
+
+.customMarker {
+  transform: translate(-50%, -100%);
+  transition: all 0.3s ease; }
+
+.customMarkerInfo {
+  transition: all 0.3s ease-in-out;
+  width: 300px; }
+
+.customMarkerValue {
+  transform: translate(-50%, -100%);
+  background: #fff;
+  border: 3px solid tomato;
+  color: #717171;
+  font-size: 10px;
+  font-weight: 700;
+  font-family: 'Merriweather', Georgia, serif;
+  position: absolute;
+  letter-spacing: 1px;
+  margin: 0 auto;
+  text-align: center;
+  top: -100%;
+  padding: 2px 3px; }
+
+.logOutBtn {
+  width: 180px;
+  margin: auto;
+  display: block;
+  margin-top: 20vh; }
+
+/*# sourceMappingURL=style.css.map */
