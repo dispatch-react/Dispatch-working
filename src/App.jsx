@@ -2,7 +2,9 @@ var React = require('react');
 var ReactDOM = require('react-dom');
 var Parse = require('parse');
 var ParseReact = require('parse-react');
-Parse.initialize("ttJuZRLZ5soirHP0jetkbsdqSGR3LUzO0QXRTwFN", "BDmHQzYoQ87Dpq0MdBRj9er20vfYytoh3YF5QXWd");
+//Parse.initialize("ttJuZRLZ5soirHP0jetkbsdqSGR3LUzO0QXRTwFN", "BDmHQzYoQ87Dpq0MdBRj9er20vfYytoh3YF5QXWd");
+Parse.initialize("dispatchrr");
+Parse.serverURL("http://dispatchrr.herokuapp.com/parse");
 
 var Geolocation = require('./components/Geolocation.jsx');
 var Login = require('./components/Login.jsx');
@@ -21,7 +23,7 @@ var FullScreen = require('react-fullscreen');
 require('./components/OverlayCluster.jsx');
 
 var App = React.createClass({
-    
+
     mixins: [ParseReact.Mixin],
     observe: function() {
         return {
@@ -39,11 +41,11 @@ var App = React.createClass({
         });
     },
     logOut: function() {
-      Parse.User.logOut();  
+      Parse.User.logOut();
     },
     render: function() {
         if (this.data.user) {
-            
+
             return (
         <div>
                     {
@@ -52,7 +54,7 @@ var App = React.createClass({
                         this.state.location === 3 ? <ShowMissions user={this.data.user}/> :
                         this.state.location === 4 ? <Settings user={this.data.user} logOut={this.logOut}/> :
                         <Geolocation user={this.data.user}/>
-                        
+
                     }
                         <Menu onChange={this.navChanged} location={this.state.location} user={this.data.user}/>
         </div>
@@ -78,5 +80,3 @@ var App = React.createClass({
 
 
 ReactDOM.render(<App style={{minHeight: "100%"}} />, document.getElementById('app'));
-    
-    
