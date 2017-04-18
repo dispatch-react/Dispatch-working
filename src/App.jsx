@@ -4,7 +4,7 @@ var Parse = require('parse');
 var ParseReact = require('parse-react');
 //Parse.initialize("ttJuZRLZ5soirHP0jetkbsdqSGR3LUzO0QXRTwFN", "BDmHQzYoQ87Dpq0MdBRj9er20vfYytoh3YF5QXWd");
 Parse.initialize("dispatchrr");
-Parse.serverURL("http://dispatchrr.herokuapp.com/parse");
+Parse.serverURL = "http://dispatchrr.herokuapp.com/parse";
 
 var Geolocation = require('./components/Geolocation.jsx');
 var Login = require('./components/Login.jsx');
