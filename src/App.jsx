@@ -2,9 +2,10 @@ var React = require('react');
 var ReactDOM = require('react-dom');
 var Parse = require('parse');
 var ParseReact = require('parse-react');
-//Parse.initialize("ttJuZRLZ5soirHP0jetkbsdqSGR3LUzO0QXRTwFN", "BDmHQzYoQ87Dpq0MdBRj9er20vfYytoh3YF5QXWd");
-Parse.initialize("dispatchrr", "6gz68iIA8h");
-Parse.serverURL = "https://dispatchrr.herokuapp.com/parse";
+Parse.initialize("9fdf1f81-77f3-4a9e-b0a5-81e52bcc45d3", "TVr5WXdTpemNEMO68JexPGrqlOdv18yh");
+Parse.serverURL = "https://api.parse.buddy.com/parse/";
+
+//Parse.initialize("dispatchrr");
 
 var Geolocation = require('./components/Geolocation.jsx');
 var Login = require('./components/Login.jsx');

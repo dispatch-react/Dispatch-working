@@ -56,10 +56,12 @@ var Login = React.createClass({
     startDemo: function(e) {
         var self = this;
         e.preventDefault();
-        Parse.User.logIn('demouser@mail.com', 'password').then(function(user) {
+        Parse.User.logIn('demouser@mail.com', 'password')
+        .then(function(user) {
+            console.log(user.username)
             self.props.onChange('home')
         }, function(user, error) {
-            alert('demo session failed')
+            alert('demo session failed: ' + error)
         })
         
     },

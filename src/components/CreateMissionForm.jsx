@@ -1,7 +1,8 @@
 var React = require('react');
 var Parse = require('parse');
 var ParseReact = require('parse-react');
-Parse.initialize("ttJuZRLZ5soirHP0jetkbsdqSGR3LUzO0QXRTwFN", "BDmHQzYoQ87Dpq0MdBRj9er20vfYytoh3YF5QXWd");
+// Parse.initialize("ttJuZRLZ5soirHP0jetkbsdqSGR3LUzO0QXRTwFN", "BDmHQzYoQ87Dpq0MdBRj9er20vfYytoh3YF5QXWd");
+Parse.initialize("9fdf1f81-77f3-4a9e-b0a5-81e52bcc45d3", "TVr5WXdTpemNEMO68JexPGrqlOdv18yh");
 
 var Button = require('react-bootstrap').Button;
 var ButtonToolbar = require('react-bootstrap').ButtonToolbar;
@@ -75,11 +76,11 @@ var CreateMissionForm = React.createClass({
             var att;
             var loc = new Parse.GeoPoint({latitude: this.state.lat, longitude: this.state.lng});
             var fileUpload = this.refs.fileUpload.getInputDOMNode().files;
-            
+
             // Define function to post a mission
-            
+
             function postMission() {
-            
+
               var creator = ParseReact.Mutation.Create('Missions', {
                 title: self.state.title,
                 value: self.state.value,
@@ -108,7 +109,7 @@ var CreateMissionForm = React.createClass({
                 att = null;
                 this.close();
                 postMission();
-                
+
             }
             else {
                 var file = fileUpload[0];
@@ -116,7 +117,7 @@ var CreateMissionForm = React.createClass({
                 att.save().then(function(){
                     self.close();
                     postMission();
-                    
+
                 });
             }
         },
@@ -143,13 +144,13 @@ var CreateMissionForm = React.createClass({
             <Modal.Title>Dispatchr</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            
-              
+
+
     <Input type="text" placeholder="Mission Title" onChange={this.handleTitleChange} required/>
     <Input type="textarea" label="Mission description" onChange={this.handleDescriptionChange} required/>
     <Input type="text" onChange={this.handleValueChange} addonBefore="Set Bounty" addonAfter="$" required/>
     <Autocomplete setLocation={this.handleStartLocationChange} className="autocomplete"/>
-    
+
     <Input type="select" label="Category" labelClassName="col-xs-2" wrapperClassName="col-xs-5" onChange={this.handleCategoryChange}>
       <option readOnly>-Select a Category-</option>
       <option value="construction, trades">Construction, Trades</option>
@@ -160,23 +161,23 @@ var CreateMissionForm = React.createClass({
       <option value="general labour">General Labour</option>
       <option value="other">Other</option>
     </Input>
-    
+
     <Input type="checkbox" label="Car required" wrapperClassName="col-xs-6" onChange={this.handleCarReqChange} checked={this.state.carReq} />
 
     <Input type="checkbox" label="Remote Work" wrapperClassName="col-xs-6" onChange={this.handleRemoteChange} checked={this.state.remote} />
-    
+
     <Input type="file" id="MissionAttachment" ref="fileUpload" placeholder="attachment" help="[Optional]" />
-    
+
             </Modal.Body>
           <Modal.Footer>
             <Col xs={4} md={2}>
                 <ButtonInput type="reset" value="Reset"/>
             </Col>
-            <Col xs={4} xsOffset={4} md={2} mdOffset={8}>    
+            <Col xs={4} xsOffset={4} md={2} mdOffset={8}>
                 <ButtonInput bsStyle="success" type="submit" value="Dispatch!" />
             </Col>
           </Modal.Footer>
-          
+
           </form>
         </Modal>
       </div>

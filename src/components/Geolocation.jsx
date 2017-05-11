@@ -42,7 +42,8 @@ var inputStyle = {
 
 var Parse = require('parse');
 var ParseReact = require('parse-react');
-Parse.initialize("ttJuZRLZ5soirHP0jetkbsdqSGR3LUzO0QXRTwFN", "BDmHQzYoQ87Dpq0MdBRj9er20vfYytoh3YF5QXWd");
+// Parse.initialize("ttJuZRLZ5soirHP0jetkbsdqSGR3LUzO0QXRTwFN", "BDmHQzYoQ87Dpq0MdBRj9er20vfYytoh3YF5QXWd");
+Parse.initialize("9fdf1f81-77f3-4a9e-b0a5-81e52bcc45d3", "TVr5WXdTpemNEMO68JexPGrqlOdv18yh");
 const geolocation = (
     canUseDOM && navigator.geolocation || {
         getCurrentPosition: (success, failure) => {
@@ -108,7 +109,7 @@ var Geolocation = React.createClass({
             },
             15000
         );
-        
+
         if (this.props.user.userName === 'demoUser') {
             this.setState({
                 center: {
@@ -118,11 +119,11 @@ var Geolocation = React.createClass({
                 showDemo: true
             });
         }
-        
+
         else {
-        
+
             geolocation.getCurrentPosition((position) => {
-                
+
                 this.setState({
                     userPosition: {
                         lat: position.coords.latitude,
@@ -291,10 +292,10 @@ var Geolocation = React.createClass({
                 </div>
             </div>
         </OverlayView>
-    
+
         );
         }
-})} 
+})}
                     </MarkerClusterer>
                         <SearchBox
                                 bounds={this.state.bounds}
@@ -324,8 +325,8 @@ var Geolocation = React.createClass({
                         </Col>
                     </Modal.Footer>
                 </Modal>
-                
-                
+
+
                 <Modal show={this.state.showDemo} onHide={this.dismissDemo} backdrop="static">
                     <Modal.Header closeButton>
                         <Modal.Title>Thanks for trying Dispatchr!</Modal.Title>
@@ -339,7 +340,7 @@ var Geolocation = React.createClass({
                                 <p>Use the Dispatchr button at the bottom of your screen to create a new mission.</p>
                               </Media.Body>
                         </Media>
-                        
+
                         <Media>
                               <Media.Body>
                                 <p>The map displays missions created by users, click the icon to get details and apply.</p>
@@ -354,7 +355,7 @@ var Geolocation = React.createClass({
                                 <p>This app was built by <a href="github.com/dcodus" target="_blank">Codrin</a> and <a href="github.com/aplhanumeric0101" target="_blank">Alex</a> while at <a href="decodemtl.com" target="_blank">DecodeMTL</a></p>
                               </Media.Body>
                         </Media>
-                        
+
                     </Modal.Body>
                     <Modal.Footer>
                         <Col xs={4} xsOffset={4}>
@@ -368,4 +369,3 @@ var Geolocation = React.createClass({
 });
 
 module.exports = Geolocation;
-
