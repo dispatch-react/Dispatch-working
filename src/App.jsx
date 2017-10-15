@@ -1,7 +1,6 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
 var Parse = require('parse');
-var ParseReact = require('parse-react');
 Parse.initialize("9fdf1f81-77f3-4a9e-b0a5-81e52bcc45d3", "TVr5WXdTpemNEMO68JexPGrqlOdv18yh");
 Parse.serverURL = "https://api.parse.buddy.com/parse/";
 
@@ -25,15 +24,10 @@ require('./components/OverlayCluster.jsx');
 
 var App = React.createClass({
 
-    mixins: [ParseReact.Mixin],
-    observe: function() {
-        return {
-            user: ParseReact.currentUser
-        };
-    },
     getInitialState: function() {
         return {
-            location: 'home'
+            location: 'home',
+            user: Parse.User.current()
         }
     },
     navChanged: function(newValue) {
@@ -45,19 +39,20 @@ var App = React.createClass({
       Parse.User.logOut();
     },
     render: function() {
-        if (this.data.user) {
+      
+        if (this.state.user) {
 
             return (
         <div>
                     {
-                        this.state.location === 1 ? <Profile user={this.data.user}/> :
-                        this.state.location === 2 ? <Inbox user={this.data.user}/> :
-                        this.state.location === 3 ? <ShowMissions user={this.data.user}/> :
-                        this.state.location === 4 ? <Settings user={this.data.user} logOut={this.logOut}/> :
-                        <Geolocation user={this.data.user}/>
+                        this.state.location === 1 ? <Profile user={this.state.user}/> :
+                        this.state.location === 2 ? <Inbox user={this.state.user}/> :
+                        this.state.location === 3 ? <ShowMissions user={this.state.user}/> :
+                        this.state.location === 4 ? <Settings user={this.state.user} logOut={this.logOut}/> :
+                        <Geolocation user={this.state.user}/>
 
                     }
-                        <Menu onChange={this.navChanged} location={this.state.location} user={this.data.user}/>
+                        <Menu onChange={this.navChanged} location={this.state.location} user={this.state.user}/>
         </div>
 
             );

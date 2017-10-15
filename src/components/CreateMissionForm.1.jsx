@@ -1,7 +1,5 @@
 var React = require('react');
 var Parse = require('parse');
-var ParseReact = require('parse-react');
-// Parse.initialize("ttJuZRLZ5soirHP0jetkbsdqSGR3LUzO0QXRTwFN", "BDmHQzYoQ87Dpq0MdBRj9er20vfYytoh3YF5QXWd");
 Parse.initialize("9fdf1f81-77f3-4a9e-b0a5-81e52bcc45d3", "TVr5WXdTpemNEMO68JexPGrqlOdv18yh");
 
 var Button = require('react-bootstrap').Button;
@@ -70,6 +68,7 @@ var CreateMissionForm = React.createClass({
             })
         },
         handleFormSubmit: function(e) {
+          console.log('captured form submission')
             e.preventDefault();
             var self = this;
             var att;
@@ -80,46 +79,48 @@ var CreateMissionForm = React.createClass({
 
             function postMission() {
 
-              var creator = ParseReact.Mutation.Create('Missions', {
-                title: self.state.title,
-                value: self.state.value,
-                startLocationGeo: loc,
-                description: self.state.description,
-                category: self.state.category,
-                carReq: self.state.carReq,
-                remote: self.state.remote,
-                missionAttachment: att,
-                createdBy: self.props.user,
-                createdByUsername: self.props.user.userName,
-                status: "open"
-            });
+              var Mission = Parse.Object.extend('Missions');
+              var mission = new Mission();
+                mission.set("title", self.state.title);
+                mission.set("value", self.state.value);
+                mission.set("startLocationGeo", loc);
+                mission.set("description", self.state.description);
+                mission.set("category", self.state.category);
+                mission.set("carReq", self.state.carReq);
+                mission.set("remote", self.state.remote);
+                mission.set("missionAttachment", att);
+                mission.set("createdBy", self.props.user);
+                mission.set("createdByUsername", self.props.user.userName);
+                mission.set("status", "open");
+                console.dir(mission);
 
-            // ...and execute it
-            creator.dispatch().then(function(res){
-                console.log("res")
-            },
-            function(error){
-                alert('there was an error, check your self')
-            });
-        }
+                // ...and execute it
+                mission.save(null, {
+                    success: function(mission){
+                      console.log("mission saved")
+                    },
+                    error: function(mission, error){
+                      alert('there was an error, check your self: ' + error)
+                    }
+                  })
+
             //Check for uploaded file and call postMission either way
 
             if (fileUpload.length === 0) {
+              console.log('no file uploaded, call postMission')
                 att = null;
-                this.close();
+                self.close();
                 postMission();
-
-            }
-            else {
+            } else {
                 console.log('found attachment')
                 var file = fileUpload[0];
                 att = new Parse.File("attach", file);
                 att.save().then(function(){
                     self.close();
                     postMission();
-
                 });
             }
+          }
         },
         close() {
             this.setState({

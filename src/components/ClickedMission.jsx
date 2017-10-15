@@ -8,7 +8,6 @@ var Label = require('react-bootstrap').Label;
 var ListGroup = require('react-bootstrap').ListGroup;
 var ListGroupItem = require('react-bootstrap').ListGroupItem;
 var Parse = require('parse');
-var ParseReact = require('parse-react');
 var Image = require('react-bootstrap').Image;
 
 var ShowMissions = React.createClass({

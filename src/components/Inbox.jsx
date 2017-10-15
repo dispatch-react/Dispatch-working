@@ -1,6 +1,5 @@
 var React = require('react');
 var Parse = require('parse');
-var ParseReact = require('parse-react');
 var Input = require('react-bootstrap').Input;
 var Button = require('react-bootstrap').Button;
 var ButtonInput = require('react-bootstrap').ButtonInput;
@@ -15,7 +14,6 @@ var Profile = require('./Profile.jsx');
 var Image = require('react-bootstrap').Image;
 
 var Inbox = React.createClass({
-    mixins: [ParseReact.Mixin],
     getInitialState: function () {
         return {
             text: '',
@@ -164,7 +162,7 @@ var Inbox = React.createClass({
 
                 <Panel header={title} bsStyle="success">
                     <Row>
-                        
+
                             {this.data.inbox.map(function (c) {
                                     if (c.type === "missionAccepted") {
                                         Buttons = (
@@ -202,7 +200,7 @@ var Inbox = React.createClass({
                                     )
                                 }
                             )}
-                        
+
                     </Row>
                 </Panel>
 
@@ -269,4 +267,3 @@ var Inbox = React.createClass({
 });
 
 module.exports = Inbox;
-

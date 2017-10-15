@@ -41,8 +41,6 @@ var inputStyle = {
 };
 
 var Parse = require('parse');
-var ParseReact = require('parse-react');
-// Parse.initialize("ttJuZRLZ5soirHP0jetkbsdqSGR3LUzO0QXRTwFN", "BDmHQzYoQ87Dpq0MdBRj9er20vfYytoh3YF5QXWd");
 Parse.initialize("9fdf1f81-77f3-4a9e-b0a5-81e52bcc45d3", "TVr5WXdTpemNEMO68JexPGrqlOdv18yh");
 const geolocation = (
     canUseDOM && navigator.geolocation || {
@@ -62,14 +60,21 @@ var CustomMarker = React.createClass({
     }
 });
 var Geolocation = React.createClass({
-    mixins: [ParseReact.Mixin, TimerMixin],
-    observe: function () {
-        return {
-            Missions: new Parse.Query('Missions').equalTo('status', 'open').limit(1000)
-        }
-    },
     getInitialState(){
+      var Missions = [];
+      var m = new Parse.Query('Missions').equalTo('status', 'open').limit(1000);
+      m.find({
+        success: function(missions){
+          Missions = missions
+        },
+        error: function(error, missions){
+          console.log('retrieve missions error')
+          console.error(error)
+          Parse.User.logOut();
+        }
+      })
         return {
+          Missions: Missions,
             userPosition: null,
             center: null,
             //These are the markers created by user. Mission markers.
@@ -103,12 +108,12 @@ var Geolocation = React.createClass({
 
     },
     componentDidMount(){
-        this.setInterval(
-            () => {
-                this.refreshQueries();
-            },
-            15000
-        );
+        // this.setInterval(
+        //     () => {
+        //         this.refreshQueries();
+        //     },
+        //     15000
+        // );
 
         if (this.props.user.userName === 'demoUser') {
             this.setState({
@@ -168,7 +173,7 @@ var Geolocation = React.createClass({
             createdBy: this.props.user
         }
 
-        var addApplicant = ParseReact.Mutation.AddUnique(self.state.clickedMission, 'applicants', applicantObj)
+        //var addApplicant = ParseReact.Mutation.AddUnique(self.state.clickedMission, 'applicants', applicantObj)
 
         var acceptedAlert = ParseReact.Mutation.Create('Messages', {
             writtenTo: self.state.clickedMission.createdBy,
@@ -195,7 +200,7 @@ var Geolocation = React.createClass({
     render: function () {
         const {center, content, radius, markers, userPosition} = this.state;
         let contents = [];
-        let positions = this.data.Missions.map((marker)=> {
+        let positions = this.state.Missions.map((marker)=> {
             return marker;
         });
         positions.forEach((m1, i) => {
