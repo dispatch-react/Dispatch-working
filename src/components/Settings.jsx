@@ -1,6 +1,5 @@
 var React = require('react');
 var Parse = require('parse');
-var ParseReact = require('parse-react');
 
 var Button = require('react-bootstrap').Button;
 
@@ -17,13 +16,7 @@ var Settings = React.createClass({
             var changes = {
                 column_name: "new_value"
             };
-            var updater = ParseReact.Mutation.Set(target, changes)
-            updater.dispatch().then(function(res) {
-                    alert('settings we updated')
-                },
-                function(error) {
-                    alert('bad file')
-                })
+            // TODO: update local user document 
     },
     render: function() {
         return (

@@ -42,6 +42,8 @@ var inputStyle = {
 
 var Parse = require('parse');
 Parse.initialize("9fdf1f81-77f3-4a9e-b0a5-81e52bcc45d3", "TVr5WXdTpemNEMO68JexPGrqlOdv18yh");
+Parse.serverURL = "https://api.parse.buddy.com/parse/";
+
 const geolocation = (
     canUseDOM && navigator.geolocation || {
         getCurrentPosition: (success, failure) => {
@@ -61,31 +63,23 @@ var CustomMarker = React.createClass({
 });
 var Geolocation = React.createClass({
     getInitialState(){
-      var Missions = [];
-      var m = new Parse.Query('Missions').equalTo('status', 'open').limit(1000);
-      m.find({
-        success: function(missions){
-          Missions = missions
-        },
-        error: function(error, missions){
-          console.log('retrieve missions error')
-          console.error(error)
-          Parse.User.logOut();
-        }
-      })
         return {
-          Missions: Missions,
-            userPosition: null,
-            center: null,
-            //These are the markers created by user. Mission markers.
-            bounds: null,
-            //These are display tags above the markers
-            openedMissions: [],
-            showModal: false,
-            clickedMission: {},
-            clickedMissionTitle: '',
-            clickedMissionDescription: ''
+          Missions: [],
+          userPosition: null,
+          center: null,
+          //These are the markers created by user. Mission markers.
+          bounds: null,
+          //These are display tags above the markers
+          openedMissions: [],
+          showModal: false,
+          clickedMission: {},
+          clickedMissionTitle: '',
+          clickedMissionDescription: ''
         }
+    },
+    componentDidUpdate(){
+      console.log('did update')
+      console.dir(this.state)
     },
     handleBoundsChanged: _.debounce(function () {
         this.setState({
@@ -107,6 +101,32 @@ var Geolocation = React.createClass({
         }
 
     },
+    componentWillMount() {
+      let self = this
+      var Missions = [];
+      var m = new Parse.Query('Missions').equalTo('status', 'open').limit(1000);
+      m.find({
+        success: function(missions){
+          self.setState({ Missions:
+            missions.map(m => {
+              return {
+                id: {objectId: m.id},
+                createdBy: m.get('createdBy'),
+                startLocationGeo: m.get('startLocationGeo'),
+                status: m.get('status'),
+                applicants: m.get('applicants'),
+                value: m.get('value')
+              }
+            })
+          })
+        },
+        error: function(error, missions){
+          console.log('retrieve missions error: logging out')
+          console.error(error)
+          Parse.User.logOut();
+        }
+      })
+    },
     componentDidMount(){
         // this.setInterval(
         //     () => {
@@ -114,8 +134,7 @@ var Geolocation = React.createClass({
         //     },
         //     15000
         // );
-
-        if (this.props.user.userName === 'demoUser') {
+        if (this.props.user.userName === 'DemoUser') {
             this.setState({
                 center: {
                     lat: 45.5017,
@@ -126,9 +145,7 @@ var Geolocation = React.createClass({
         }
 
         else {
-
             geolocation.getCurrentPosition((position) => {
-
                 this.setState({
                     userPosition: {
                         lat: position.coords.latitude,
@@ -198,6 +215,7 @@ var Geolocation = React.createClass({
             });
     },
     render: function () {
+      console.log('calling render')
         const {center, content, radius, markers, userPosition} = this.state;
         let contents = [];
         let positions = this.state.Missions.map((marker)=> {

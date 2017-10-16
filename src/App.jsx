@@ -4,8 +4,6 @@ var Parse = require('parse');
 Parse.initialize("9fdf1f81-77f3-4a9e-b0a5-81e52bcc45d3", "TVr5WXdTpemNEMO68JexPGrqlOdv18yh");
 Parse.serverURL = "https://api.parse.buddy.com/parse/";
 
-//Parse.initialize("dispatchrr");
-
 var Geolocation = require('./components/Geolocation.jsx');
 var Login = require('./components/Login.jsx');
 var Inbox = require('./components/Inbox.jsx');
@@ -30,16 +28,28 @@ var App = React.createClass({
             user: Parse.User.current()
         }
     },
-    navChanged: function(newValue) {
+    navChanged: function (newValue, user) {
+      console.log('nav to ' + newValue)
         this.setState({
             location: newValue
         });
+        if (user) {
+          this.setState({ user: Object.assign(user, {
+            userName: user.get('userName'),
+            email: user.get('email'),
+            profile_pic: user.get('profile_pic')
+          })
+        })
+      }
     },
     logOut: function() {
       Parse.User.logOut();
+      this.setState({
+          user: null
+      });
     },
     render: function() {
-      
+
         if (this.state.user) {
 
             return (
@@ -72,7 +82,5 @@ var App = React.createClass({
         }
     }
 });
-
-
 
 ReactDOM.render(<App style={{minHeight: "100%"}} />, document.getElementById('app'));

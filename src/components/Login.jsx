@@ -52,18 +52,19 @@ var Login = React.createClass({
             alert('bad login, check your inputs');
         });
     },
-    
+
     startDemo: function(e) {
         var self = this;
         e.preventDefault();
-        Parse.User.logIn('demouser@mail.com', 'password')
-        .then(function(user) {
-            console.log(user.username)
-            self.props.onChange('home')
-        }, function(user, error) {
-            alert('demo session failed: ' + error)
+        Parse.User.logIn('demouser@mail.com', 'password', {
+          success: function (user) {
+            self.props.onChange('home', user)
+          },
+          error: function (error) {
+            console.log('Failed to login')
+            console.error(error)
+          }
         })
-        
     },
 
     /* SignUp Function */
@@ -99,11 +100,11 @@ var Login = React.createClass({
             <h2 style={{color: "#222", textAlign: "center"}}>Dispatchr</h2>
             <p style={{color: "#222", textAlign: "center"}}>Welcome Back</p>
                     <br/>
-        
+
          <form className="form-horizontal" onSubmit={this.logIn}>
-         
+
         {/*EMAIL AND PASSWORD FIELDS*/}
-        
+
     <div className="input-group">
       <span className="input-group-addon"><i className="fa fa-at"></i></span>
       <input type="text" className="form-control" placeholder=" Email" id="formEmail" onChange={this.handleEmailChange}></input>
@@ -113,30 +114,30 @@ var Login = React.createClass({
       <span className="input-group-addon"><i className="fa fa-key"></i></span>
       <input type="password" className="form-control" placeholder=" Password" id="formPw" onChange={this.handlePasswordChange}></input>
     </div>
-    
+
         <br/> {/*BUTTONS TO LOGIN OR GO TO REGISTRATION + Button to Demo the App*/}
 
   <div>
-    
+
     <Button bsStyle="success" bsSize="large" block disabled={!(this.state.email.length && this.state.password.length)} type="submit">Sign In
     <span className="fa fa-sign-in"></span>
     </Button>
-    
+
     <Button bsStyle="primary" bsSize="large" type="reset" block id="register-btn" onClick={this.handleTypeChange}>
     Create
     <span className="fa fa-user-plus"></span>
     </Button>
-    
-        
+
+
     <Button bsStyle="warning" bsSize="large" block onClick={this.startDemo}>
     View Demo
     <span className="fa fa-taxi"></span>
     </Button>
-    
+
   </div>
 
       </form>
-      
+
       </div>)
         }
         else {
@@ -145,16 +146,16 @@ var Login = React.createClass({
             return (<div>
 
       <h1 style={{color: "#222", textAlign: "center"}}>Get Busy!</h1>
-        
+
       <form onSubmit={this.signUp} className="form-horizontal">
-         
+
         {/*EMAIL AND PASSWORD FIELDS*/}
-    
+
     <div className="input-group">
       <span className="input-group-addon"><i className="fa fa-at"></i></span>
       <input type="email" className="form-control" placeholder=" Email" id="formEmail" onChange={this.handleEmailChange} required></input>
     </div>
-    
+
     <div className="input-group">
       <span className="input-group-addon"><i className="fa fa-user"></i></span>
       <input type="text" className="form-control" placeholder=" Username" id="formUsername" onChange={this.handleUsernameChange} required></input>
@@ -164,12 +165,12 @@ var Login = React.createClass({
       <span className="input-group-addon"><i className="fa fa-key"></i></span>
       <input type="password" className="form-control" placeholder=" Password" id="formPw" onChange={this.handlePasswordChange} required></input>
     </div>
-    
+
     <div className="input-group" id="pwConfirm">
       <span className="input-group-addon"><i className="fa fa-key"></i></span>
       <input type="password" className="form-control" placeholder=" Confirm Password" onChange={this.handleConfPasswordChange} required></input>
     </div>
-    
+
         <br/> {/*BUTTONS TO REGISTER*/}
     <div>
         <Button bsStyle="info" bsSize="large" id="register-btn" block type="submit"
@@ -177,7 +178,7 @@ var Login = React.createClass({
             >Sign Up
           <span className="fa fa-user-plus"></span>
         </Button>
-        
+
         {/* Button to go back */}
         <Button bsStyle="warning" bsSize="large" id="back-to-login" type="reset" block onClick={this.handleTypeChange}>Go back
           <span className="fa fa-sign-in"></span>

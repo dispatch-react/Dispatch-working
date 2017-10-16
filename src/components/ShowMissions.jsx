@@ -1,6 +1,6 @@
 var React = require('react');
 var Parse = require('parse');
-var ParseReact = require('parse-react');
+// var ParseReact = require('parse-react');
 
 var Row = require('react-bootstrap').Row;
 var Col = require('react-bootstrap').Col;
@@ -16,20 +16,17 @@ var Pagination = require('react-bootstrap').Pagination;
 var MsgUser = require('./MsgUser.jsx');
 
 var ShowMissions = React.createClass({
-    mixins: [ParseReact.Mixin],
-    //Check parse-react documentation
-    //Pass the state to observe
-    //https://github.com/ParsePlatform/ParseReact/blob/master/docs/api/Mixin.md
-    observe: function(currentProps, currentState) {
+
+    componentWillMount: function(currentProps, currentState) {
         const skip = currentState.limit * (currentState.activePage - 1);
         var myCompleted = (new Parse.Query("Missions")).equalTo("createdBy", this.props.user).equalTo('status', 'complete')
         var iCompleted = (new Parse.Query("Missions")).equalTo("completedBy", this.props.user).equalTo('status', 'complete')
-            
+
         return {
-            
+
             userCompletedMissions: Parse.Query.or(myCompleted, iCompleted).skip(skip).limit(this.state.limit),
             userCompletedMissionsTotal: Parse.Query.or(myCompleted, iCompleted),
-            
+
             userOwnMissions: (new Parse.Query("Missions")).equalTo("createdBy", this.props.user).notEqualTo('status', 'complete').ascending('createdAt').skip(skip).limit(this.state.limit),
             userActiveMissions: (new Parse.Query("Missions")).equalTo("activeAgent", this.props.user).notEqualTo('status', 'complete').ascending('createdAt').skip(skip).limit(this.state.limit),
             userCompletedMissions: (new Parse.Query("Missions")).equalTo("createdBy", this.props.user).equalTo('status', 'complete').ascending('createdAt').skip(skip).limit(this.state.limit),
@@ -47,7 +44,7 @@ var ShowMissions = React.createClass({
         }
     },
     setScore: function(e){
-      this.setState({score: Number(e.target.value)})  
+      this.setState({score: Number(e.target.value)})
     },
     handleSelect(event, selectedEvent) {
         if (selectedEvent.eventKey !== this.state.activePage) {
@@ -85,7 +82,7 @@ var ShowMissions = React.createClass({
             completeMsg.set('missiongLink', { __type: "Pointer", className: "Missions", objectId: missionLink.objectId })
             completeMsg.set('type', 'missionComplete');
             completeMsg.save();
-        
+
         var missionObj = (new Parse.Query('Missions').get(missionLink.objectId).then(function(res){
             res.set('status', 'complete');
             res.set('completedBy', { __type: "Pointer", className: "_User", objectId: activeAgent.objectId });
@@ -115,7 +112,7 @@ var ShowMissions = React.createClass({
                         var style = {display: 'inline'}
                         if (c.activeAgent) {
                             var inputRef = c.objectId
-                            var agent = (<ListGroupItem><Label bsStyle="danger">Active Agent:</Label> 
+                            var agent = (<ListGroupItem><Label bsStyle="danger">Active Agent:</Label>
                                             <MsgUser missionLink={c} recipient={c.activeAgent} recipientUsername={c.acceptedAgentUsername} user={self.props.user}/>
                                         </ListGroupItem>)
                             var badge = (<Badge pullRight>Active!</Badge>)
@@ -143,7 +140,7 @@ var ShowMissions = React.createClass({
                             confirmButton = (<span></span>)
                         }
                           return(
-                         
+
     <Panel collapsible key={c.objectId} header={[c.title, badge]}>
             <Label bsStyle="info">Mission Brief:</Label> <span id="missionInfo">{c.description}</span>
         <ListGroup fill>
@@ -154,7 +151,7 @@ var ShowMissions = React.createClass({
             </Row>
         </ListGroup>
     </Panel>
-    
+
                             );
                         })}
                     {this.renderPagination(this.data.userOwnMissionsTotal)}

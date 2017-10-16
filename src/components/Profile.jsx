@@ -1,6 +1,6 @@
 var React = require('react');
 var Parse = require('parse');
-var ParseReact = require('parse-react');
+// var ParseReact = require('parse-react');
 
 var Button = require('react-bootstrap').Button;
 var Image = require('react-bootstrap').Image;
@@ -22,9 +22,9 @@ var Profile = React.createClass({
                     var scoreTotal = 0;
                     var finalScore = 0;
                     results.forEach(function(mission){
-                        
+
                         var number = mission.get('score');
-                        
+
                         if (!isNaN(number)){
                         scoreTotal += number;
                             }
@@ -91,7 +91,7 @@ var Profile = React.createClass({
         }
         else {
             imgUpdater =
-                <Input type="file" id="newProfilePic" ref="fileUpload" label="File" 
+                <Input type="file" id="newProfilePic" ref="fileUpload" label="File"
                 onChange={this.handleImgUpload}
             />
         }
@@ -113,7 +113,7 @@ var Profile = React.createClass({
                         <ListGroupItem><Label bsStyle="warning">rating:</Label> <span id="userInfo">{this.state.userRating}</span></ListGroupItem>
                     </ListGroup>
                 </Col>
-    
+
                 <Col xs={4} xsOffset={4} md={4} mdOffset={0}>
                              {profilePic}
                     <div>
@@ -121,8 +121,8 @@ var Profile = React.createClass({
                              {imgUpdater}
                     </Col>
                     </div>
-                    
-                </Col>  
+
+                </Col>
             </Row>
         </Panel>
     </div>

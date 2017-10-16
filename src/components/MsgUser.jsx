@@ -1,6 +1,5 @@
 var React = require('react');
 var Parse = require('parse');
-var ParseReact = require('parse-react');
 
 var Input = require('react-bootstrap').Input;
 var Button = require('react-bootstrap').Button;
@@ -15,7 +14,6 @@ var Modal = require('react-bootstrap').Modal;
 var Image = require('react-bootstrap').Image;
 
 var MsgUser = React.createClass({
-    mixins: [ParseReact.Mixin],
     getInitialState: function () {
         return {
             text: '',
@@ -79,9 +77,9 @@ var MsgUser = React.createClass({
         sendMessage: function (e) {
             e.preventDefault();
             var nthis = this;
-    
+
             function sendMessage() {
-    
+
                 var creator = ParseReact.Mutation.Create('Messages', {
                     content: nthis.state.text,
                     createdBy: nthis.props.user,
@@ -109,7 +107,7 @@ var MsgUser = React.createClass({
     return (
         <div style={{display: 'inline'}}>
             <Label bsStyle="info" id="missionInfo" onClick={this.open} id="msgAuthor">{this.props.recipientUsername}</Label>
-            
+
             <Modal show={this.state.showModal} onHide={this.close}>
                     <Modal.Header closeButton>
                         <Modal.Title>Dispatchr Profile</Modal.Title>

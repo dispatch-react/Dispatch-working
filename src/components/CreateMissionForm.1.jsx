@@ -1,5 +1,5 @@
 var React = require('react');
-var Parse = require('parse');
+var Parse = require('parse/node');
 Parse.initialize("9fdf1f81-77f3-4a9e-b0a5-81e52bcc45d3", "TVr5WXdTpemNEMO68JexPGrqlOdv18yh");
 
 var Button = require('react-bootstrap').Button;
