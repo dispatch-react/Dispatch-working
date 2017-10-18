@@ -15,28 +15,28 @@ var Image = require('react-bootstrap').Image;
 
 var MsgUser = React.createClass({
     getInitialState: function () {
-        return {
-            text: '',
-            messageType: 'activeReply',
-            recipient: this.props.recipient,
-            recipientUserName: this.props.recipientUsername,
-            showModal: false,
-            missionLink: this.props.missionLink,
-            agent: null,
-            userProfilePicture: null,
-            userScore: null,
-            userHometown: null
-        }
+      return {
+        text: '',
+        messageType: 'activeReply',
+        recipient: this.props.recipient,
+        recipientUserName: this.props.recipientUsername,
+        showModal: false,
+        missionLink: this.props.missionLink,
+        agent: null,
+        userProfilePicture: null,
+        userScore: null,
+        userHometown: null
+      }
     },
-        observe: function () {
-                return {
-                    messages: (new Parse.Query("Messages"))
-                };
-            },
-        close() {
-        this.setState({
-            showModal: false
-        });
+      observe: function () {
+              return {
+                  messages: (new Parse.Query("Messages"))
+              };
+          },
+      close() {
+      this.setState({
+          showModal: false
+      });
     },
         open() {
             this.setState({

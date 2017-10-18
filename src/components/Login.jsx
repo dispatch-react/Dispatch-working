@@ -10,10 +10,10 @@ var Login = React.createClass({
             password: '',
             confPw: '',
             username: '',
-            login: true
+            login: true,
+            loading: false
         };
     },
-
     handleEmailChange: function(e) {
         this.setState({
             email: e.target.value
@@ -33,7 +33,6 @@ var Login = React.createClass({
         this.setState({
             confPw: e.target.value
         });
-
     },
     handleTypeChange: function(e) {
         this.setState({
@@ -45,12 +44,25 @@ var Login = React.createClass({
 
     logIn: function(e) {
         var self = this;
+        this.setState({ loading: true })
         e.preventDefault();
-        Parse.User.logIn(this.state.email, this.state.password).then(function(user) {
+        Parse.User.logIn(this.state.email, this.state.password, {
+          success: function (user) {
+            self.props.onLogin( Object.assign(user, {
+              userName: user.get('userName'),
+              email: user.get('email'),
+              profile_pic: user.get('profile_pic'),
+              ratings: user.get('ratings')
+              })
+            )
             self.props.onChange('home')
-        }, function(user, error) {
+          },
+          error: function (error) {
+            console.log('failed to login regular user')
+            console.error(error)
             alert('bad login, check your inputs');
-        });
+          }
+        })
     },
 
     startDemo: function(e) {
@@ -58,7 +70,8 @@ var Login = React.createClass({
         e.preventDefault();
         Parse.User.logIn('demouser@mail.com', 'password', {
           success: function (user) {
-            self.props.onChange('home', user)
+            self.props.onLogin(user)
+            self.props.onChange('home')
           },
           error: function (error) {
             console.log('Failed to login')
@@ -80,7 +93,7 @@ var Login = React.createClass({
 
         user.signUp(null, {
             success: function(user) {
-                self.props.onChange('home')
+                self.props.onChange('home', user)
                 // Hooray! Let them use the app now.
             },
             error: function(user, error) {
@@ -93,100 +106,73 @@ var Login = React.createClass({
     /*Rendering the Login Page OR Register, based on this.state.login*/
 
     render: function() {
-        if (this.state.login) {
-            return (
-                <div>
-
+      if (this.state.login) {
+        return (
+          <div>
             <h2 style={{color: "#222", textAlign: "center"}}>Dispatchr</h2>
             <p style={{color: "#222", textAlign: "center"}}>Welcome Back</p>
-                    <br/>
-
-         <form className="form-horizontal" onSubmit={this.logIn}>
-
-        {/*EMAIL AND PASSWORD FIELDS*/}
-
-    <div className="input-group">
-      <span className="input-group-addon"><i className="fa fa-at"></i></span>
-      <input type="text" className="form-control" placeholder=" Email" id="formEmail" onChange={this.handleEmailChange}></input>
-    </div>
-             <br/>
-    <div className="input-group">
-      <span className="input-group-addon"><i className="fa fa-key"></i></span>
-      <input type="password" className="form-control" placeholder=" Password" id="formPw" onChange={this.handlePasswordChange}></input>
-    </div>
-
-        <br/> {/*BUTTONS TO LOGIN OR GO TO REGISTRATION + Button to Demo the App*/}
-
-  <div>
-
-    <Button bsStyle="success" bsSize="large" block disabled={!(this.state.email.length && this.state.password.length)} type="submit">Sign In
-    <span className="fa fa-sign-in"></span>
-    </Button>
-
-    <Button bsStyle="primary" bsSize="large" type="reset" block id="register-btn" onClick={this.handleTypeChange}>
-    Create
-    <span className="fa fa-user-plus"></span>
-    </Button>
-
-
-    <Button bsStyle="warning" bsSize="large" block onClick={this.startDemo}>
-    View Demo
-    <span className="fa fa-taxi"></span>
-    </Button>
-
-  </div>
-
-      </form>
-
-      </div>)
-        }
-        else {
-            /*RENDERING THE REGISTER PAGE*/
-
-            return (<div>
-
-      <h1 style={{color: "#222", textAlign: "center"}}>Get Busy!</h1>
-
-      <form onSubmit={this.signUp} className="form-horizontal">
-
-        {/*EMAIL AND PASSWORD FIELDS*/}
-
-    <div className="input-group">
-      <span className="input-group-addon"><i className="fa fa-at"></i></span>
-      <input type="email" className="form-control" placeholder=" Email" id="formEmail" onChange={this.handleEmailChange} required></input>
-    </div>
-
-    <div className="input-group">
-      <span className="input-group-addon"><i className="fa fa-user"></i></span>
-      <input type="text" className="form-control" placeholder=" Username" id="formUsername" onChange={this.handleUsernameChange} required></input>
-    </div>
-
-    <div className="input-group">
-      <span className="input-group-addon"><i className="fa fa-key"></i></span>
-      <input type="password" className="form-control" placeholder=" Password" id="formPw" onChange={this.handlePasswordChange} required></input>
-    </div>
-
-    <div className="input-group" id="pwConfirm">
-      <span className="input-group-addon"><i className="fa fa-key"></i></span>
-      <input type="password" className="form-control" placeholder=" Confirm Password" onChange={this.handleConfPasswordChange} required></input>
-    </div>
-
-        <br/> {/*BUTTONS TO REGISTER*/}
-    <div>
-        <Button bsStyle="info" bsSize="large" id="register-btn" block type="submit"
-            disabled={!(this.state.email.length && this.state.password.length && (this.state.confPw === this.state.password))}
-            >Sign Up
-          <span className="fa fa-user-plus"></span>
-        </Button>
-
-        {/* Button to go back */}
-        <Button bsStyle="warning" bsSize="large" id="back-to-login" type="reset" block onClick={this.handleTypeChange}>Go back
-          <span className="fa fa-sign-in"></span>
-        </Button>
-    </div>
-
-      </form> </div>);
-        }
+            <br/>
+            <form className="form-horizontal" onSubmit={this.logIn}>
+              {/*EMAIL AND PASSWORD FIELDS*/}
+              <div className="input-group">
+                <span className="input-group-addon"><i className="fa fa-at"></i></span>
+                <input type="text" className="form-control" placeholder=" Email" id="formEmail" onChange={this.handleEmailChange}></input>
+              </div>
+              <br/>
+              <div className="input-group">
+                <span className="input-group-addon"><i className="fa fa-key"></i></span>
+                <input type="password" className="form-control" placeholder=" Password" id="formPw" onChange={this.handlePasswordChange}></input>
+              </div>
+              <br/>
+              {/*BUTTONS TO LOGIN OR GO TO REGISTRATION + Button to Demo the App*/}
+              <div>
+                <Button bsStyle="success" bsSize="large" block disabled={!(this.state.email.length && this.state.password.length)} type="submit">Sign In<span className={this.state.loading ? "fa fa-loading" : "fa fa-sign-in"}></span></Button>
+                <Button bsStyle="primary" bsSize="large" type="reset" block id="register-btn" onClick={this.handleTypeChange}>Create<span className="fa fa-user-plus"></span></Button>
+                <Button bsStyle="warning" bsSize="large" block onClick={this.startDemo}>View Demo<span className="fa fa-taxi"></span></Button>
+              </div>
+            </form>
+          </div>
+        )
+      }
+      else {
+          /*RENDERING THE REGISTER PAGE*/
+        return (
+          <div>
+            <h1 style={{color: "#222", textAlign: "center"}}>Get Busy!</h1>
+            <form onSubmit={this.signUp} className="form-horizontal">
+              {/*EMAIL AND PASSWORD FIELDS*/}
+              <div className="input-group">
+                <span className="input-group-addon"><i className="fa fa-at"></i></span>
+                <input type="email" className="form-control" placeholder=" Email" id="formEmail" onChange={this.handleEmailChange} required></input>
+              </div>
+              <div className="input-group">
+                <span className="input-group-addon"><i className="fa fa-user"></i></span>
+                <input type="text" className="form-control" placeholder=" Username" id="formUsername" onChange={this.handleUsernameChange} required></input>
+              </div>
+              <div className="input-group">
+                <span className="input-group-addon"><i className="fa fa-key"></i></span>
+                <input type="password" className="form-control" placeholder=" Password" id="formPw" onChange={this.handlePasswordChange} required></input>
+              </div>
+              <div className="input-group" id="pwConfirm">
+                <span className="input-group-addon"><i className="fa fa-key"></i></span>
+                <input type="password" className="form-control" placeholder=" Confirm Password" onChange={this.handleConfPasswordChange} required></input>
+              </div>
+              <br/>
+              {/*BUTTONS TO REGISTER*/}
+              <div>
+                 <Button bsStyle="info" bsSize="large" id="register-btn" block type="submit"
+                   disabled={!(this.state.email.length && this.state.password.length && (this.state.confPw === this.state.password))}>
+                   Sign Up<span className="fa fa-user-plus"></span>
+                 </Button>
+                 {/* Button to go back */}
+                 <Button bsStyle="warning" bsSize="large" id="back-to-login" type="reset" block onClick={this.handleTypeChange}>Go back
+                   <span className="fa fa-sign-in"></span>
+                 </Button>
+              </div>
+            </form>
+          </div>
+        )
+      }
     }
 });
 

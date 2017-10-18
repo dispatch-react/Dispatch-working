@@ -21,66 +21,52 @@ var FullScreen = require('react-fullscreen');
 require('./components/OverlayCluster.jsx');
 
 var App = React.createClass({
-
     getInitialState: function() {
-        return {
-            location: 'home',
-            user: Parse.User.current()
-        }
-    },
-    navChanged: function (newValue, user) {
-      console.log('nav to ' + newValue)
-        this.setState({
-            location: newValue
-        });
-        if (user) {
-          this.setState({ user: Object.assign(user, {
-            userName: user.get('userName'),
-            email: user.get('email'),
-            profile_pic: user.get('profile_pic')
-          })
-        })
+      return {
+        location: 'home',
+        user: Parse.User.current()
       }
     },
+    login: function (userdoc) {
+      console.dir(userdoc)
+      this.setState({ user: userdoc })
+    },
+    navChanged: function (newValue) {
+      this.setState({ nav: newValue })
+    },
     logOut: function() {
-      Parse.User.logOut();
-      this.setState({
-          user: null
-      });
+      Parse.User.logOut()
+      this.setState({ user: null })
     },
     render: function() {
-
-        if (this.state.user) {
-
-            return (
-        <div>
-                    {
-                        this.state.location === 1 ? <Profile user={this.state.user}/> :
-                        this.state.location === 2 ? <Inbox user={this.state.user}/> :
-                        this.state.location === 3 ? <ShowMissions user={this.state.user}/> :
-                        this.state.location === 4 ? <Settings user={this.state.user} logOut={this.logOut}/> :
-                        <Geolocation user={this.state.user}/>
-
-                    }
-                        <Menu onChange={this.navChanged} location={this.state.location} user={this.state.user}/>
-        </div>
-
-            );
-        }
-        else {
-            return (
-        <Grid className="loginScreen">
+      if (this.state.user && Parse.User.current()) {
+        return (
+          <div>
+            {
+              this.state.nav === 1 ? <Profile user={this.state.user}/> :
+              this.state.nav === 2 ? <Inbox user={this.state.user}/> :
+              this.state.nav === 3 ? <ShowMissions user={this.state.user}/> :
+              this.state.nav === 4 ? <Settings user={this.state.user} logOut={this.logOut}/> :
+              <Geolocation user={this.state.user} Missions={this.state.missions}/>
+            }
+            <Menu onChange={this.navChanged} location={this.state.nav} user={this.state.user}/>
+          </div>
+        )
+      }
+      else {
+        return (
+          <Grid className="loginScreen">
             <Row>
-                <Col xs={9} xsOffset={2} sm={6} smOffset={3} md={5} mdOffset={4}>
-                    <Well id="appView" className="loginPage">
-                             <Login onChange={this.navChanged} />
-                    </Well>
-                </Col>
+              <Col xs={9} xsOffset={2} sm={6} smOffset={3} md={5} mdOffset={4}>
+                <Well id="appView" className="loginPage">
+                  <Login onChange={this.navChanged} onLogin={this.login} />
+                </Well>
+              </Col>
             </Row>
-        </Grid>
-           )
-        }
+          </Grid>
+         )
+      }
     }
-});
+})
 
 ReactDOM.render(<App style={{minHeight: "100%"}} />, document.getElementById('app'));

@@ -34,7 +34,7 @@
     "react": "^15.4.0",
     "react-addons-update": "^0.14.5",
     "react-autosuggest": "^3.1.0",
-    "react-bootstrap": "^0.28.1",
+    "react-bootstrap": "^0.31.3",
     "react-dom": "^15.4.0",
     "react-fullscreen": "^0.1.0",
     "react-google-maps": "^4.7.1",
