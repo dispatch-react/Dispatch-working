@@ -23,9 +23,14 @@ require('./components/OverlayCluster.jsx');
 var App = React.createClass({
     getInitialState: function() {
       return {
-        location: 'home',
-        user: Parse.User.current()
+        nav: 'home',
+        user: Parse.User.current(),
+        newMissions: [],
+        latestMission: null
       }
+    },
+    addMission: function (mission) {
+      this.setState({ latestMission: mission, newMissions: this.state.newMissions.concat(mission) })
     },
     login: function (userdoc) {
       console.dir(userdoc)
@@ -47,9 +52,9 @@ var App = React.createClass({
               this.state.nav === 2 ? <Inbox user={this.state.user}/> :
               this.state.nav === 3 ? <ShowMissions user={this.state.user}/> :
               this.state.nav === 4 ? <Settings user={this.state.user} logOut={this.logOut}/> :
-              <Geolocation user={this.state.user} Missions={this.state.missions}/>
+              <Geolocation user={this.state.user} newMissions={this.state.newMissions} latestMission={this.state.latestMission}/>
             }
-            <Menu onChange={this.navChanged} location={this.state.nav} user={this.state.user}/>
+            <Menu onChange={this.navChanged} addMission={this.addMission} location={this.state.nav} user={this.state.user}/>
           </div>
         )
       }

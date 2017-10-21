@@ -40,25 +40,29 @@ var CreateMissionForm = React.createClass({
     var Mission = Parse.Object.extend('Missions');
     var mission = new Mission();
     mission.set('progress: ', 1)
+    var att = null;
     var loc = new Parse.GeoPoint({latitude: this.state.lat, longitude: this.state.lng});
     console.dir(this.state)
     let fileUpload = this.state.att
     // Define function to post a mission
     function postMission() {
       console.log('invoked postMission')
-      mission.set("title", self.state.title);
-      mission.set("value", self.state.value);
-      mission.set("startLocationGeo", loc);
-      mission.set("description", self.state.description);
-      mission.set("category", self.state.category);
-      mission.set("carReq", self.state.carReq);
-      mission.set("remote", self.state.remote);
-      mission.set("missionAttachment", att);
-      mission.set("createdBy", self.props.user);
-      mission.set("createdByUsername", self.props.user.userName);
+      mission.set('title', self.state.title);
+      mission.set('value', self.state.value);
+      mission.set('startLocationGeo', loc);
+      mission.set('description', self.state.description);
+      mission.set('category', self.state.category);
+      mission.set('carReq', self.state.carReq);
+      mission.set('remote', self.state.remote);
+      mission.set('missionAttachment', att);
+      mission.set('createdBy', self.props.user);
+      mission.set('status', 'open');
+      mission.set('createdByUsername', self.props.user.userName);
       mission.save(null, {
           success: function(mission){
-            console.log("mission saved")
+            self.props.addMission(mission)
+            console.log('mission saved')
+            console.dir(mission)
           },
           error: function(mission, error){
             console.error(error)
@@ -68,13 +72,13 @@ var CreateMissionForm = React.createClass({
       }
       //Check for uploaded file and call postMission either way
       if (!this.state.att) {
-        self.close();
         postMission();
+        self.close();
       } else {
-        let attachment = new Parse.File("attach", fileUpload);
+        let attachment = new Parse.File('attach', fileUpload);
         attachment.save().then(function(){
-          self.close();
           postMission();
+          self.close();
         });
       }
     },

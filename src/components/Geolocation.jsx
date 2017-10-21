@@ -61,6 +61,7 @@ var Geolocation = React.createClass({
         openedMissions: [],
         showModal: false,
         loading: true,
+        newMissions: this.props.newMissions,
         clickedMission: {},
         clickedMissionTitle: '',
         clickedMissionDescription: ''
@@ -74,43 +75,58 @@ var Geolocation = React.createClass({
     handleMarkerClick (marker) {
       var missions = this.state.openedMissions;
       if (missions.indexOf(marker.id.objectId) < 0) {
-        this.setState({
-          openedMissions: this.state.openedMissions.concat([marker.id.objectId])
-        })
+        this.setState({ openedMissions: this.state.openedMissions.concat([marker.id.objectId]) })
       }
     },
-    componentWillMount () {
+    expandMission (m) {
+      return {
+        id: {objectId: m.id},
+        title: m.get('title'),
+        createdBy: m.get('createdBy'),
+        startLocationGeo: m.get('startLocationGeo'),
+        status: m.get('status'),
+        applicants: m.get('applicants'),
+        value: m.get('value'),
+        missionAttachent: m.get('missionAttachent'),
+        applicants: m.get('applicants'),
+        remote: m.get('remote'),
+        carReq: m.get('carReq'),
+        description: m.get('description'),
+        createdByUsername: m.get('createdByUsername')
+      }
+    },
+    componentWillMount() {
       let self = this
-      var Missions = [];
-      var m = new Parse.Query('Missions').equalTo('status', 'open').limit(1000);
-      m.find({
-        success: function (missions) {
+      var missionQuery = new Parse.Query('Missions').equalTo('status', 'open').limit(1000);
+      missionQuery.find({
+        success: function (results) {
           self.setState({ Missions:
-            missions.map(m => {
-              return {
-                id: {objectId: m.id},
-                createdBy: m.get('createdBy'),
-                startLocationGeo: m.get('startLocationGeo'),
-                status: m.get('status'),
-                applicants: m.get('applicants'),
-                value: m.get('value'),
-                missionAttachent: m.get('missionAttachent'),
-                applicants: m.get('applicants'),
-                remote: m.get('remote'),
-                carReq: m.get('carReq'),
-                description: m.get('description'),
-                createdByUsername: m.get('createdByUsername')
-              }
-            }),
+            results.map(m => self.expandMission(m)),
             loading: false
           })
         },
-        error: function(error, missions){
+        error: function(error, results){
           console.log('retrieve missions error: logging out')
           console.error(error)
           Parse.User.logOut();
         }
       })
+    },
+    componentWillReceiveProps(nextProps) {
+      var self = this
+      console.log('componentWillReceiveProps')
+      console.dir(nextProps)
+      if (nextProps.latestMission) {
+        var missionQuery = new Parse.Query('Missions')
+        missionQuery.get(nextProps.latestMission.id, {
+          success: function (result) {
+            self.setState({Missions: self.state.Missions.concat(self.expandMission(result))})
+          },
+          error: function (error) {
+            console.error(error)
+          }
+        })
+      }
     },
     componentDidMount(){
         // this.setInterval(
