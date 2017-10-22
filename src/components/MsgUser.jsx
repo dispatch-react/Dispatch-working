@@ -3,7 +3,6 @@ var Parse = require('parse');
 
 var Input = require('react-bootstrap').Input;
 var Button = require('react-bootstrap').Button;
-var ButtonInput = require('react-bootstrap').ButtonInput;
 var Row = require('react-bootstrap').Row;
 var Col = require('react-bootstrap').Col;
 var Panel = require('react-bootstrap').Panel;
